@@ -9,7 +9,7 @@ const Header = () => {
                 <NavLink to='/Page1' activeClassName={s.active}>Page1</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to='/Page2' activeClassName={s.active}>Page2</NavLink>
+                <NavLink to='/Registration' activeClassName={s.active}>Registration</NavLink>
             </div>
             <div className={s.item}>
                 <NavLink to='/Page3' activeClassName={s.active}>Page3</NavLink>

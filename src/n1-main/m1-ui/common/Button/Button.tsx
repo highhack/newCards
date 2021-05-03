@@ -22,12 +22,15 @@ export interface ButtonProps {
      * Optional click handler
      */
     onClick?: () => void;
+
+    onBlur: () => void
 }
 
 /**
  * Primary UI component for user interaction
  */
-export const Button: React.FC<ButtonProps> = ({
+export const Button: React.FC<ButtonProps> = ({ onBlur,
+                                                  onClick,
                                                   primary = false,
                                                   size = 'medium',
                                                   backgroundColor,
@@ -36,15 +39,13 @@ export const Button: React.FC<ButtonProps> = ({
                                               }) => {
     const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
 
-    const afterPush = () => {
-        alert('write function')
-    }
 
 
     return (
         <button
+            onBlur={onBlur}
             type="button"
-            onClick={afterPush}
+            onClick={onClick}
             className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
             style={{ backgroundColor }}
             {...props}
