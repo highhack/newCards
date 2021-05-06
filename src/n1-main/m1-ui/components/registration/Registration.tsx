@@ -5,6 +5,7 @@ import {Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {
+    LoadingStatusType,
     SendRegisterTC,
     setCheckPasswordAC,
     setErrorTextAC,
@@ -13,12 +14,13 @@ import {
 } from "../../../m2-bll/registerReducer";
 
 
-type RegistrationType =  {
+type RegistrationType = {
     mail: string
     password: string
     checkPassword: string
     errorText: null | string
     addedUser: boolean,
+    loadingStatus: LoadingStatusType
 }
 
 
@@ -33,6 +35,7 @@ const Registration = () => {
     let checkPassword = register.checkPassword
     let errorText = register.errorText
     let addedUser = register.addedUser
+    let loadingStatus = register.loadingStatus
 
     // let [mail, setMail] = useState("")
     // let [password, setPassword] = useState("")
@@ -40,13 +43,11 @@ const Registration = () => {
     // let [errorText, setErrorText] = useState<string | null>(null)
 
 
-
-        const SendRegister = () => {
-            if (password !== checkPassword) {
-                return dispatch(setErrorTextAC('password is not correct'))
-            } else
-                dispatch(SendRegisterTC(mail, password))
-        }
+    const SendRegister = () => {
+        if (password !== checkPassword) {
+            return dispatch(setErrorTextAC('password is not correct'))
+        } else dispatch(SendRegisterTC(mail, password))
+    }
 
     const onChangeMail = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(setMailAC(e.currentTarget.value))
@@ -58,37 +59,39 @@ const Registration = () => {
         dispatch(setCheckPasswordAC(e.currentTarget.value))
     }
     const hideErrorText = () => {
-        dispatch(setErrorTextAC(null))
+        dispatch(setErrorTextAC(''))
     }
 
 
-
     if (addedUser) {
-        return <Redirect  to='/Page1'/>
+        return <Redirect to='/Page1'/>
     } else
-    return (
-        <div>
-            <p> Please fill in the blank fields and press sign up </p>
-            <form className={s.register}>
-                <div>Email</div>
-                <input onChange={onChangeMail}/>
-                <div>Password</div>
-                <input onChange={onChangePassword}/>
-                <div>Password</div>
-                <input onChange={onChangeCheckPassword}/>
-                <div className={s.errorText}>{errorText !== null
-                    ? <div className={errorText}>{errorText}</div>
-                    : ''}
-                </div>
-                <Button
-                    label={'Sign Up'}
-                    onClick={SendRegister}
-                    onBlur={hideErrorText}
-                    backgroundColor={'blue'}/>
-            </form>
-        </div>
+        return (
+            <div onClick={hideErrorText}>
+                <p> Please fill in the blank fields and press sign up </p>
+                <form className={s.register}>
+                    {loadingStatus === 'loading' ? <div>Loading...</div>: ''}
+                    <div>Email</div>
+                    <input onChange={onChangeMail}/>
+                    <div>Password</div>
+                    <input onChange={onChangePassword}/>
+                    <div>Password</div>
+                    <input onChange={onChangeCheckPassword}/>
+                    <div className={s.errorText}>{errorText !== null
+                        ? <div className={s.errorText}>{errorText}</div>
+                        : ''}
+                    </div>
 
-    )
+                    <Button
+                        disabled={loadingStatus === 'loading'}
+                        label={'Sign Up'}
+                        onClick={SendRegister}
+                        onBlur={hideErrorText}
+                        backgroundColor={'blue'}/>
+                </form>
+            </div>
+
+        )
 
 }
 
