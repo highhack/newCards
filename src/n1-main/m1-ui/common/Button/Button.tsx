@@ -24,12 +24,16 @@ export interface ButtonProps {
     onClick?: () => void;
 
     onBlur: () => void
+
+    disabled: boolean
 }
 
 /**
  * Primary UI component for user interaction
  */
-export const Button: React.FC<ButtonProps> = ({ onBlur,
+export const Button: React.FC<ButtonProps> = ({
+                                                  onBlur,
+                                                  disabled,
                                                   onClick,
                                                   primary = false,
                                                   size = 'medium',
@@ -40,14 +44,14 @@ export const Button: React.FC<ButtonProps> = ({ onBlur,
     const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
 
 
-
     return (
         <button
+            disabled={disabled}
             onBlur={onBlur}
             type="button"
             onClick={onClick}
             className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-            style={{ backgroundColor }}
+            style={{backgroundColor}}
             {...props}
         >
             {label}
