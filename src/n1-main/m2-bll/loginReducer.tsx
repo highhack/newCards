@@ -1,5 +1,6 @@
 import {Dispatch} from "redux"
 import {authAPI} from "../m3-dal/auth-api";
+import {LoadingStatusType} from "./registerReducer";
 
 // types
 type InitialStateType = {
@@ -8,7 +9,7 @@ type InitialStateType = {
     isLoggedIn: boolean
     rememberMe: boolean
     errorText: null | string
-    status: RequestStatusType
+    loadingStatus: RequestStatusType
 }
 
 type ActionsType = ReturnType<typeof setIsLoggedInAC>
@@ -25,7 +26,7 @@ const initialState = {
     isLoggedIn: false,
     rememberMe: false,
     errorText: null,
-    status: "idle"
+    loadingStatus: "idle"
 } as InitialStateType
 
 
@@ -39,7 +40,7 @@ export const loginReducer = (state: InitialStateType = initialState, action: Act
             return {...state, rememberMe: action.rememberMe};
         case "APP/SET-STATUS":
             debugger
-            return {...state, status: action.status};
+            return {...state, loadingStatus: action.loadingStatus};
         default:
             return state
     }
@@ -53,8 +54,8 @@ export const setErrorTextLoggedInAC = (errorText: null | string) =>
     ({type: "login/SET-ERROR-TEXT-LOGGED-IN", errorText} as const);
 export const changCheckboxLoggedInAC = (rememberMe: boolean) =>
     ({type: "login/CHANG-CHECKBOX-LOGGED-IN", rememberMe} as const);
-export const setAppStatusAC = (status: RequestStatusType) =>
-    ({type: 'APP/SET-STATUS', status} as const)
+export const setAppStatusAC = (loadingStatus: RequestStatusType) =>
+    ({type: 'APP/SET-STATUS', loadingStatus} as const)
 
 
 // thunks

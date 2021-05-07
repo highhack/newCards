@@ -19,6 +19,7 @@ type LoginActionType = {
     isLoggedIn: boolean
     rememberMe: boolean
     errorText: null | string
+    loadingStatus: RequestStatusType
 }
 
 export const Login = React.memo(() => {
@@ -30,19 +31,19 @@ export const Login = React.memo(() => {
         let isLoggedIn = login.isLoggedIn;
         let errorText = login.errorText;
         let rememberMe = login.rememberMe;
-        let status = login
+        let loadingStatus = login.loadingStatus
 
         const [error, setError] = useState("")
         const [pass, setPass] = useState(password)
         const [mail, setMail] = useState(email)
-        // const [status, setStatus] = useState<RequestStatusType>('idle')
+        const [status, setStatus] = useState<RequestStatusType>('idle')
 
         const dispatch = useDispatch();
 
 
         const setLogin = () => {
             debugger
-            // setStatus('loading...')
+            setStatus('loading...')
             if (isLoggedIn) {
                 // return setError('password or  email is not correct')
                 return dispatch(setErrorTextLoggedInAC(errorText))
@@ -82,6 +83,7 @@ export const Login = React.memo(() => {
             <p>Email: <b>nya-admin@nya.nya</b></p>
             <p>Password: <b>1qazxcvBG</b></p>
             <form className={s.register}>
+                {/*{loadingStatus === 'loading' ? <div>Loading...</div>: ''}*/}
                 <div style={{color: "green"}}><b>{status}</b></div>
                 <div>
                     Email
@@ -115,7 +117,7 @@ export const Login = React.memo(() => {
                     onClick={setLogin}
                     onBlur={setErrorText}
                     backgroundColor={'blue'}
-                    disabled={status === "loading"}
+                    disabled={loadingStatus === "loading..."}
                 />
             </form>
         </div>
