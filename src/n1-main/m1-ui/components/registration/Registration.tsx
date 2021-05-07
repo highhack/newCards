@@ -64,7 +64,7 @@ const Registration = () => {
 
 
     if (addedUser) {
-        return <Redirect to='/Page1'/>
+        return <Redirect to='/Login'/>
     } else
         return (
             <div onClick={hideErrorText}>
