@@ -39,8 +39,9 @@ export const loginReducer = (state: InitialStateType = initialState, action: Act
         case "login/CHANG-CHECKBOX-LOGGED-IN":
             return {...state, rememberMe: action.rememberMe};
         case "APP/SET-STATUS":
+            let a = {...state, loadingStatus: action.loadingStatus}
             debugger
-            return {...state, loadingStatus: action.loadingStatus};
+            return a;
         default:
             return state
     }
@@ -68,14 +69,15 @@ export const loginTC = (email: string, password: string, rememberMe?: boolean) =
         if (response.data.password) {
             dispatch(setIsLoggedInAC(true));
             dispatch(changCheckboxLoggedInAC(true))
-            // dispatch(setAppStatusAC(""))
+
         }
+        dispatch(setAppStatusAC("idle"))
     } catch (error) {
         // throw new Error(`Unable to get currency ${error}`);
         dispatch(setErrorTextLoggedInAC(error.response.data.error))
-        // dispatch(setAppStatusAC(""))
 
     }
+    dispatch(setAppStatusAC("idle"))
 }
 
 

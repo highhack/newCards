@@ -22,7 +22,7 @@ type LoginActionType = {
     loadingStatus: RequestStatusType
 }
 
-export const Login = React.memo(() => {
+export const Login = () => {
 
         const login = useSelector<AppRootStateType, LoginActionType>(state => state.login);
 
@@ -36,23 +36,18 @@ export const Login = React.memo(() => {
         const [error, setError] = useState("")
         const [pass, setPass] = useState(password)
         const [mail, setMail] = useState(email)
-        // const [status, setStatus] = useState<RequestStatusType>('idle')
+        // const [status, setStatus] = useState<RequestStatusType>('idle');
 
         const dispatch = useDispatch();
 
 
         const setLogin = () => {
-            // setStatus('loading...')
-            // dispatch(setAppStatusAC("loading..."));
             if (isLoggedIn) {
                 // return setError('password or  email is not correct')
                 return dispatch(setErrorTextLoggedInAC(errorText))
-                // setStatus("")
             } else {
                 dispatch(loginTC(mail, pass))
             }
-            dispatch(setAppStatusAC(""))
-
         };
 
         const setErrorText = () => {
@@ -83,7 +78,7 @@ export const Login = React.memo(() => {
             <p>Email: <b>nya-admin@nya.nya</b></p>
             <p>Password: <b>1qazxcvBG</b></p>
             <form className={s.register}>
-                {loadingStatus === 'loading...' ? <div>Loading...</div>: ''}
+                {loadingStatus === 'loading...' ? <div>{loadingStatus}</div>: ''}
                 {/*<div style={{color: "green"}}><b>{status}</b></div>*/}
                 <div>
                     Email
@@ -122,4 +117,4 @@ export const Login = React.memo(() => {
             </form>
         </div>
     }
-)
+
