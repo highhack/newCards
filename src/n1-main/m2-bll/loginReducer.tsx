@@ -39,9 +39,7 @@ export const loginReducer = (state: InitialStateType = initialState, action: Act
         case "login/CHANG-CHECKBOX-LOGGED-IN":
             return {...state, rememberMe: action.rememberMe};
         case "APP/SET-STATUS":
-            let a = {...state, loadingStatus: action.loadingStatus}
-            debugger
-            return a;
+            return {...state, loadingStatus: action.loadingStatus};
         default:
             return state
     }
