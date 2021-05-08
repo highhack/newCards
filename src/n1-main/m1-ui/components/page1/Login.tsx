@@ -23,6 +23,7 @@ type LoginActionType = {
 
 export const Login = () => {
 
+    const dispatch = useDispatch();
     const login = useSelector<AppRootStateType, LoginActionType>(state => state.login);
 
     let isLoggedIn = login.isLoggedIn;
@@ -32,10 +33,6 @@ export const Login = () => {
 
     const [pass, setPass] = useState("1qazxcvBG")
     const [mail, setMail] = useState("nya-admin@nya.nya")
-
-
-    const dispatch = useDispatch();
-
 
     const setLogin = () => {
         if (isLoggedIn) {
