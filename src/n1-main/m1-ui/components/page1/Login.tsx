@@ -5,7 +5,6 @@ import {
     changCheckboxLoggedInAC,
     loginTC,
     RequestStatusType,
-    setAppStatusAC,
     setErrorTextLoggedInAC
 } from "../../../m2-bll/loginReducer";
 import s from "../registration/Registration.module.css";
@@ -24,97 +23,87 @@ type LoginActionType = {
 
 export const Login = () => {
 
-        const login = useSelector<AppRootStateType, LoginActionType>(state => state.login);
+    const login = useSelector<AppRootStateType, LoginActionType>(state => state.login);
 
-        let password = login.password;
-        let email = login.email;
-        let isLoggedIn = login.isLoggedIn;
-        let errorText = login.errorText;
-        let rememberMe = login.rememberMe;
-        let loadingStatus = login.loadingStatus
+    let isLoggedIn = login.isLoggedIn;
+    let errorText = login.errorText;
+    let rememberMe = login.rememberMe;
+    let loadingStatus = login.loadingStatus
 
-        const [error, setError] = useState("")
-        const [pass, setPass] = useState(password)
-        const [mail, setMail] = useState(email)
-        // const [status, setStatus] = useState<RequestStatusType>('idle');
-
-        const dispatch = useDispatch();
+    const [pass, setPass] = useState("1qazxcvBG")
+    const [mail, setMail] = useState("nya-admin@nya.nya")
 
 
-        const setLogin = () => {
-            if (isLoggedIn) {
-                // return setError('password or  email is not correct')
-                return dispatch(setErrorTextLoggedInAC(errorText))
-            } else {
-                dispatch(loginTC(mail, pass))
-            }
-        };
+    const dispatch = useDispatch();
 
-        const setErrorText = () => {
-            dispatch(setErrorTextLoggedInAC(error))
-        };
 
-        const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-            setPass(e.currentTarget.value);
+    const setLogin = () => {
+        if (isLoggedIn) {
+            dispatch(setErrorTextLoggedInAC(errorText));
+        } else {
+            dispatch(loginTC(mail, pass, rememberMe));
         }
-        const onChangEmail = (e: ChangeEvent<HTMLInputElement>) => {
-            setMail(e.currentTarget.value);
-        }
-        const onChangCheckbox = () => {
-            dispatch(changCheckboxLoggedInAC(rememberMe))
-        }
+    };
 
-        // if (isLoggedIn) {
-        //     return <Redirect to={"/Login"}/>
-        // }
-        {
-            isLoggedIn ? <Redirect to={"/Login"}/> : <Redirect to={"/Profile"}/>
+    const setErrorText = () => {
+        dispatch(setErrorTextLoggedInAC(""));
+    };
 
-        }
-
-        return <div>
-            <p> Please fill in the blank fields and press LOGIN </p>
-            <p>or use common test account credentials:</p>
-            <p>Email: <b>nya-admin@nya.nya</b></p>
-            <p>Password: <b>1qazxcvBG</b></p>
-            <form className={s.register}>
-                {loadingStatus === 'loading...' ? <div>{loadingStatus}</div>: ''}
-                {/*<div style={{color: "green"}}><b>{status}</b></div>*/}
-                <div>
-                    Email
-                    <input
-                        type="email"
-                        name="email"
-                        value={mail}
-                        onChange={onChangEmail}
-                    />
-                </div>
-                <div>
-                    Password
-                    <input
-                        type="password"
-                        name="password"
-                        value={pass}
-                        onChange={onChangePassword}
-                    />
-                </div>
-                <input
-                    type={"checkbox"}
-                    name="rememberMe"
-                    onChange={onChangCheckbox}
-                />
-                <div className={s.errorText}>{errorText !== null
-                    ? <div className={errorText}>{errorText}</div>
-                    : ''}
-                </div>
-                <Button
-                    label={'Login'}
-                    onClick={setLogin}
-                    onBlur={setErrorText}
-                    backgroundColor={'blue'}
-                    disabled={loadingStatus === "loading..."}
-                />
-            </form>
-        </div>
+    const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+        setPass(e.currentTarget.value);
     }
+    const onChangEmail = (e: ChangeEvent<HTMLInputElement>) => {
+        setMail(e.currentTarget.value);
+    }
+    const onChangCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(changCheckboxLoggedInAC(e.currentTarget.checked))
+    }
+
+    if (isLoggedIn) {
+        return <Redirect to={"/Page4"}/>
+    }
+
+    return <div onClick={setErrorText}>
+        <p> Please fill in the blank fields and press LOGIN </p>
+        <p>or use common test account credentials:</p>
+        <p>Email: <b>nya-admin@nya.nya</b></p>
+        <p>Password: <b>1qazxcvBG</b></p>
+        <form className={s.register}>
+            {loadingStatus === 'loading...' ? <div>{loadingStatus}</div> : ''}
+            <div>
+                Email
+                <input
+                    type="email"
+                    name="email"
+                    value={mail}
+                    onChange={onChangEmail}
+                />
+            </div>
+            <div>
+                Password
+                <input
+                    type="password"
+                    name="password"
+                    value={pass}
+                    onChange={onChangePassword}
+                />
+            </div>
+            <input
+                type={"checkbox"}
+                name="rememberMe"
+                onChange={onChangCheckbox}
+            />
+            <div className={s.errorText}>{errorText !== null
+                ? <div className={errorText}>{errorText}</div>
+                : ''}
+            </div>
+            <Button
+                label={'Login'}
+                onClick={setLogin}
+                backgroundColor={'blue'}
+                disabled={loadingStatus === "loading..."}
+            />
+        </form>
+    </div>
+}
 

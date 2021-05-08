@@ -8,6 +8,9 @@
 
 input {
     margin: 10px;
+    border-radius: 18px;
+    padding: 8px;
+    text-align: center;
 }
 
 

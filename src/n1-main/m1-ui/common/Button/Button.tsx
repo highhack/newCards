@@ -23,9 +23,9 @@ export interface ButtonProps {
      */
     onClick?: () => void;
 
-    onBlur: () => void
+    onBlur?: () => void
 
-    disabled: boolean
+    disabled?: boolean
 }
 
 /**
