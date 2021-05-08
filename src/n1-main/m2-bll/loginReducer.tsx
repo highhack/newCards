@@ -1,6 +1,5 @@
 import {Dispatch} from "redux"
 import {authAPI} from "../m3-dal/auth-api";
-import {LoadingStatusType} from "./registerReducer";
 
 // types
 type InitialStateType = {
@@ -54,28 +53,34 @@ export const setErrorTextLoggedInAC = (errorText: null | string) =>
 export const changCheckboxLoggedInAC = (rememberMe: boolean) =>
     ({type: "login/CHANG-CHECKBOX-LOGGED-IN", rememberMe} as const);
 export const setAppStatusAC = (loadingStatus: RequestStatusType) =>
-    ({type: 'APP/SET-STATUS', loadingStatus} as const)
+    ({type: 'APP/SET-STATUS', loadingStatus} as const);
 
 
 // thunks
 export const loginTC = (email: string, password: string, rememberMe?: boolean) => async (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatusAC("loading..."))
+
+    dispatch(setAppStatusAC("loading..."));
 
     try {
-
-        const response = await authAPI.login(email, password, rememberMe);
-        if (response.data.password) {
-            dispatch(setIsLoggedInAC(true));
-            dispatch(changCheckboxLoggedInAC(true))
-
-        }
-        dispatch(setAppStatusAC("idle"))
+        await authAPI.login(email, password, rememberMe);
+        dispatch(setIsLoggedInAC(true));
     } catch (error) {
-        // throw new Error(`Unable to get currency ${error}`);
         dispatch(setErrorTextLoggedInAC(error.response.data.error))
-
     }
-    dispatch(setAppStatusAC("idle"))
+    dispatch(setAppStatusAC("idle"));
+};
+
+export const logoutTC = (value: boolean) => async (dispatch: Dispatch<ActionsType>) => {
+
+    dispatch(setAppStatusAC("loading..."));
+
+    try {
+        await authAPI.logout();
+        dispatch(setIsLoggedInAC(false));
+    } catch (error) {
+        dispatch(setErrorTextLoggedInAC(error.response.data.error));
+    }
+    dispatch(setAppStatusAC("idle"));
 }
 
 
