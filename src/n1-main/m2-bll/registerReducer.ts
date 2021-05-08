@@ -59,10 +59,11 @@ export const SendRegisterTC = (mail: string, password: string) => (dispatch: Dis
             if (res.addedUser !== undefined) {
                 dispatch(setAddedUserAC())
             }
+            dispatch(setLoadingStatusAC('succeeded'))
         })
         .catch(error => {dispatch(setErrorTextAC(error.response.data.error))
+            dispatch(setLoadingStatusAC('succeeded'))
             })
-        .then(() => dispatch(setLoadingStatusAC('succeeded')))
 }
 
 

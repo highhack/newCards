@@ -43,11 +43,13 @@ const Registration = () => {
     // let [errorText, setErrorText] = useState<string | null>(null)
 
 
-    const SendRegister = () => {
-        if (password !== checkPassword) {
-            return dispatch(setErrorTextAC('password is not correct'))
-        } else dispatch(SendRegisterTC(mail, password))
-    }
+
+        const SendRegister = () => {
+            if (password !== checkPassword) {
+                return dispatch(setErrorTextAC('password is not correct'))
+            } else
+                dispatch(SendRegisterTC(mail, password))
+        }
 
     const onChangeMail = (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(setMailAC(e.currentTarget.value))
@@ -59,8 +61,9 @@ const Registration = () => {
         dispatch(setCheckPasswordAC(e.currentTarget.value))
     }
     const hideErrorText = () => {
-        dispatch(setErrorTextAC(''))
+        dispatch(setErrorTextAC(null))
     }
+
 
 
     if (addedUser) {

@@ -6,7 +6,7 @@ const Header = () => {
     return (
         <nav className={s.nav}>
             <div className={s.item}>
-                <NavLink to='/Page1' activeClassName={s.active}>Page1</NavLink>
+                <NavLink to='/Login' activeClassName={s.active}>Login</NavLink>
             </div>
             <div className={s.item}>
                 <NavLink to='/Registration' activeClassName={s.active}>Registration</NavLink>
