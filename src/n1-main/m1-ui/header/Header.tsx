@@ -1,13 +1,13 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import s from './Header.module.css';
-import {Logout} from "../components/page1/Logout";
+import {Login} from "../components/login/Login";
 
 const Header = () => {
     return (
         <nav className={s.nav}>
             <div className={s.item}>
-                {<NavLink to='/Login' activeClassName={s.active}>Login</NavLink> && <Logout/>}
+                {<NavLink to='/Login' activeClassName={s.active}>Login</NavLink>}
             </div>
             <div className={s.item}>
                 <NavLink to='/Registration' activeClassName={s.active}>Registration</NavLink>
@@ -16,7 +16,13 @@ const Header = () => {
                 <NavLink to='/Page3' activeClassName={s.active}>Page3</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to='/Page4' activeClassName={s.active}>Page4</NavLink>
+                <NavLink to='/Profile' activeClassName={s.active}>Profile</NavLink>
+            </div>
+            <div className={s.item}>
+                <NavLink to='/packs' activeClassName={s.active}>Packs</NavLink>
+            </div>
+            <div className={s.item}>
+                <NavLink to='/cards' activeClassName={s.active}>Cards</NavLink>
             </div>
         </nav>
     )

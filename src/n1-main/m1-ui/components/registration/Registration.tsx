@@ -70,26 +70,26 @@ const Registration = () => {
         return <Redirect to='/login'/>
     } else
         return (
-            <div onClick={hideErrorText}>
+            <div>
                 <p> Please fill in the blank fields and press sign up </p>
                 <form className={s.register}>
                     {loadingStatus === 'loading' ? <div>Loading...</div>: ''}
                     <div>Email</div>
                     <input onChange={onChangeMail}/>
-                    <div>Password</div>
+                    <div >Password</div>
                     <input onChange={onChangePassword}/>
-                    <div>Password</div>
+                    <div >Password</div>
                     <input onChange={onChangeCheckPassword}/>
-                    <div className={s.errorText}>{errorText !== null
+                    <div className={s.errorText} >{errorText !== null
                         ? <div className={s.errorText}>{errorText}</div>
                         : ''}
                     </div>
 
                     <Button
                         disabled={loadingStatus === 'loading'}
+                        onBlur={hideErrorText}
                         label={'Sign Up'}
                         onClick={SendRegister}
-                        onBlur={hideErrorText}
                         backgroundColor={'blue'}/>
                 </form>
             </div>

@@ -60,7 +60,7 @@ export const Login = () => {
     }
 
     if (isLoggedIn) {
-        return <Redirect to={"/Page4"}/>
+        return <Redirect to={"/profile"}/>
     }
 
     return <div onClick={setErrorText}>

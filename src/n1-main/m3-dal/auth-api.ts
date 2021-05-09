@@ -11,9 +11,9 @@ export const authAPI = {
     login(email: string, password: string, rememberMe: boolean = false) {
         return instance.post<LoginParamsType>(`auth/login`, {email, password, rememberMe})
     },
-    logout() {
-        return instance.delete(`auth/me`, {});
-    }
+    // logout() {
+    //     return instance.delete(`auth/me`, {});
+    // }
 }
 
 // types

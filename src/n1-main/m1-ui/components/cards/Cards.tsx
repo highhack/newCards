@@ -1,11 +1,11 @@
 import React from "react";
 
-const  Page4 = () => {
+const  Cards = () => {
     return (
         <div>
-            Page4
+            Cards
         </div>
     );
 }
 
-export default Page4;
+export default Cards;

@@ -31,7 +31,8 @@ export interface ButtonProps {
 /**
  * Primary UI component for user interaction
  */
-export const Button: React.FC<ButtonProps> = ({ onBlur,
+export const Button: React.FC<ButtonProps> = ({
+                                                  onBlur,
                                                   disabled,
                                                   onClick,
                                                   primary = false,
@@ -50,7 +51,7 @@ export const Button: React.FC<ButtonProps> = ({ onBlur,
             type="button"
             onClick={onClick}
             className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-            style={{ backgroundColor }}
+            style={{backgroundColor}}
             {...props}
         >
             {label}

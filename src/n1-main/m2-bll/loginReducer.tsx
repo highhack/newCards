@@ -70,18 +70,18 @@ export const loginTC = (email: string, password: string, rememberMe?: boolean) =
     dispatch(setAppStatusAC("idle"));
 };
 
-export const logoutTC = (value: boolean) => async (dispatch: Dispatch<ActionsType>) => {
-
-    dispatch(setAppStatusAC("loading..."));
-
-    try {
-        await authAPI.logout();
-        dispatch(setIsLoggedInAC(false));
-    } catch (error) {
-        dispatch(setErrorTextLoggedInAC(error.response.data.error));
-    }
-    dispatch(setAppStatusAC("idle"));
-}
+// export const logoutTC = (value: boolean) => async (dispatch: Dispatch<ActionsType>) => {
+//
+//     dispatch(setAppStatusAC("loading..."));
+//
+//     try {
+//         await authAPI.logout();
+//         dispatch(setIsLoggedInAC(false));
+//     } catch (error) {
+//         dispatch(setErrorTextLoggedInAC(error.response.data.error));
+//     }
+//     dispatch(setAppStatusAC("idle"));
+// }
 
 
 
