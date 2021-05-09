@@ -35,11 +35,7 @@ export const Login = () => {
     const [mail, setMail] = useState("nya-admin@nya.nya")
 
     const setLogin = () => {
-        if (isLoggedIn) {
-            dispatch(setErrorTextLoggedInAC(errorText));
-        } else {
             dispatch(loginTC(mail, pass, rememberMe));
-        }
     };
 
     const setErrorText = () => {
