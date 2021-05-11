@@ -26,12 +26,15 @@ export interface ButtonProps {
     onBlur?: () => void
 
     disabled?: boolean
+
+    id?: string
 }
 
 /**
  * Primary UI component for user interaction
  */
 export const Button: React.FC<ButtonProps> = ({
+                                                  id,
                                                   onBlur,
                                                   disabled,
                                                   onClick,
@@ -46,6 +49,7 @@ export const Button: React.FC<ButtonProps> = ({
 
     return (
         <button
+            id={id}
             disabled={disabled}
             onBlur={onBlur}
             type="button"

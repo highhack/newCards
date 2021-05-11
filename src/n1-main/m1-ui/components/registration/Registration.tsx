@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useState} from "react";
 import s from './Registration.module.css'
 import {Button} from "../../common/Button/Button";
 import {Redirect} from "react-router-dom";
@@ -7,10 +7,7 @@ import {AppRootStateType} from "../../../m2-bll/store";
 import {
     LoadingStatusType,
     SendRegisterTC,
-    setCheckPasswordAC,
     setErrorTextAC,
-    setMailAC,
-    setPasswordAC
 } from "../../../m2-bll/registerReducer";
 
 
@@ -30,17 +27,14 @@ const Registration = () => {
 
     const dispatch = useDispatch();
 
-    let mail = register.mail
-    let password = register.password
-    let checkPassword = register.checkPassword
     let errorText = register.errorText
     let addedUser = register.addedUser
     let loadingStatus = register.loadingStatus
 
-    // let [mail, setMail] = useState("")
-    // let [password, setPassword] = useState("")
-    // let [checkPassword, setCheckPassword] = useState("")
-    // let [errorText, setErrorText] = useState<string | null>(null)
+    let [mail, setMail] = useState("")
+    let [password, setPassword] = useState("")
+    let [checkPassword, setCheckPassword] = useState("")
+
 
 
 
@@ -52,14 +46,14 @@ const Registration = () => {
         }
 
     const onChangeMail = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setMailAC(e.currentTarget.value))
+        setMail(e.currentTarget.value)
     }
     const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setPasswordAC(e.currentTarget.value))
+        setPassword(e.currentTarget.value)
     }
     const onChangeCheckPassword = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setCheckPasswordAC(e.currentTarget.value))
-    }
+        setCheckPassword(e.currentTarget.value)
+           }
     const hideErrorText = () => {
         dispatch(setErrorTextAC(null))
     }
