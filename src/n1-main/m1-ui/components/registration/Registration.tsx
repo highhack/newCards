@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useState} from "react";
 import s from './Registration.module.css'
 import {Button} from "../../common/Button/Button";
 import {Redirect} from "react-router-dom";
@@ -7,10 +7,7 @@ import {AppRootStateType} from "../../../m2-bll/store";
 import {
     LoadingStatusType,
     SendRegisterTC,
-    setCheckPasswordAC,
     setErrorTextAC,
-    setMailAC,
-    setPasswordAC
 } from "../../../m2-bll/registerReducer";
 
 
@@ -30,63 +27,63 @@ const Registration = () => {
 
     const dispatch = useDispatch();
 
-    let mail = register.mail
-    let password = register.password
-    let checkPassword = register.checkPassword
     let errorText = register.errorText
     let addedUser = register.addedUser
     let loadingStatus = register.loadingStatus
 
-    // let [mail, setMail] = useState("")
-    // let [password, setPassword] = useState("")
-    // let [checkPassword, setCheckPassword] = useState("")
-    // let [errorText, setErrorText] = useState<string | null>(null)
+    let [mail, setMail] = useState("")
+    let [password, setPassword] = useState("")
+    let [checkPassword, setCheckPassword] = useState("")
 
 
-    const SendRegister = () => {
-        if (password !== checkPassword) {
-            return dispatch(setErrorTextAC('password is not correct'))
-        } else dispatch(SendRegisterTC(mail, password))
-    }
+
+
+        const SendRegister = () => {
+            if (password !== checkPassword) {
+                return dispatch(setErrorTextAC('password is not correct'))
+            } else
+                dispatch(SendRegisterTC(mail, password))
+        }
 
     const onChangeMail = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setMailAC(e.currentTarget.value))
+        setMail(e.currentTarget.value)
     }
     const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setPasswordAC(e.currentTarget.value))
+        setPassword(e.currentTarget.value)
     }
     const onChangeCheckPassword = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setCheckPasswordAC(e.currentTarget.value))
-    }
+        setCheckPassword(e.currentTarget.value)
+           }
     const hideErrorText = () => {
-        dispatch(setErrorTextAC(''))
+        dispatch(setErrorTextAC(null))
     }
+
 
 
     if (addedUser) {
-        return <Redirect to='/Page1'/>
+        return <Redirect to='/login'/>
     } else
         return (
-            <div onClick={hideErrorText}>
+            <div>
                 <p> Please fill in the blank fields and press sign up </p>
                 <form className={s.register}>
                     {loadingStatus === 'loading' ? <div>Loading...</div>: ''}
                     <div>Email</div>
                     <input onChange={onChangeMail}/>
-                    <div>Password</div>
+                    <div >Password</div>
                     <input onChange={onChangePassword}/>
-                    <div>Password</div>
+                    <div >Password</div>
                     <input onChange={onChangeCheckPassword}/>
-                    <div className={s.errorText}>{errorText !== null
+                    <div className={s.errorText} >{errorText !== null
                         ? <div className={s.errorText}>{errorText}</div>
                         : ''}
                     </div>
 
                     <Button
                         disabled={loadingStatus === 'loading'}
+                        onBlur={hideErrorText}
                         label={'Sign Up'}
                         onClick={SendRegister}
-                        onBlur={hideErrorText}
                         backgroundColor={'blue'}/>
                 </form>
             </div>

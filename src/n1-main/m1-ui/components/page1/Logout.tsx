@@ -16,7 +16,6 @@ type LoginActionType = {
 }
 
 export const Logout = React.memo(() => {
-
         const dispatch = useDispatch();
         const login = useSelector<AppRootStateType, LoginActionType>(state => state.login);
 
