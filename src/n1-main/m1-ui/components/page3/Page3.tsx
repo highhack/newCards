@@ -16,13 +16,13 @@ const ForgotPassword = React.memo(function ForgotPassword() {
     const serverError =useSelector((store: AppRootStateType):string|null =>store.forgotPassword.error);
     const dispatch = useDispatch();
     const onClick = useCallback(() => {dispatch(forgotPasswordTC(value))}, [value])
-    let a 
+    let a
     useEffect(() => {
 debugger
         dispatch(authMeTC())
     },[]);
 
-
+let c 
     return (
         <div style={{marginTop:"25px"}}>
             Enter your email

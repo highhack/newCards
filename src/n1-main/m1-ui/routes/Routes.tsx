@@ -14,7 +14,7 @@ const  Routes = () => {
             <Switch>
                 <Route exact path={'/'} render={() => <div> Hello</div>} />
                 <Route exact path={'/registration'} render={() => <Registration />} />
-                <Route exact path={'/Page3'} render={() => <ForgotPassword />} />
+                <Route exact path={'/forgot'} render={() => <ForgotPassword />} />
                 <Route exact path={'/profile'} render={() => <Profile />} />
                 <Route exact path={'/login'} render={() => <Login />} />
                 <Route exact path={'/packs'} render={() => <Packs />} />
