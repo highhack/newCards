@@ -22,7 +22,11 @@ export const  Api = {
         let promise =  instance.delete<PostOrDeleteResponseType>(`cards/pack?id=${id}`)
         return promise
             .then(response =>   response.data)
-    }
+    },
+    me() {
+        const promise = instance.get('auth/me');
+        return promise;
+    },
 }
 
 type GetCardPackResponseType = {
