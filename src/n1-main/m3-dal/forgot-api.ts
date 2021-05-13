@@ -16,4 +16,9 @@ export const cardAPI = {
         const from = "test-front-admin <ai73a@yandex.by>"
         return instance.post('auth/forgot', {email,from,message});
     },
+    authMe(){
+        let promise = instance.post('auth/me', {});
+        debugger
+        return promise;
+    }
 }

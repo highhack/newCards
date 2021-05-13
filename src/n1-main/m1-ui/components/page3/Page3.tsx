@@ -1,8 +1,8 @@
-import React, {ChangeEvent, useCallback, useState} from 'react';
+import React, {ChangeEvent, useCallback, useState, useEffect} from 'react';
 import {Button} from '../../common/Button/Button';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../m2-bll/store';
-import {forgotPasswordTC, RequestStatusType} from '../../../m2-bll/forgotReducer';
+import {forgotPasswordTC, RequestStatusType, authMeTC} from '../../../m2-bll/forgotReducer';
 
 
 const ForgotPassword = React.memo(function ForgotPassword() {
@@ -17,6 +17,11 @@ const ForgotPassword = React.memo(function ForgotPassword() {
     const dispatch = useDispatch();
     const onClick = useCallback(() => {dispatch(forgotPasswordTC(value))}, [value])
 
+    let a 
+    useEffect(() => {useEffect
+        debugger
+        dispatch(authMeTC())
+    },[]);
     return (
         <div style={{marginTop:"25px"}}>
             Enter your email

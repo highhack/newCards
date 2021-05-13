@@ -64,6 +64,19 @@ export const forgotPasswordTC = (email: string) => {
 }
 
 
+export const authMeTC =()=>(dispatch: ThunkDispatch)=>{
+    cardAPI.authMe().then((res: any) => {
+        debugger
+    }).catch(e => {
+        const error = e.response?e.response.data.error:(e.message + ', more details in the console');
+        debugger
+    }).finally(()=>{
+        }
+    )
+}
+
+
+
 // types
 type ActionsType =
     | ReturnType<typeof forgotPasswordAC>
