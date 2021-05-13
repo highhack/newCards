@@ -19,16 +19,14 @@ export const packReducer = (state: InitialStateType = initialState, action: Acti
         case 'ADD-PACK':
             return {...state, newPackTitle: action.newPackTitle}
         case 'DELETE-PACK':
-            let a = state.cardPacks.filter((p: any) => p._id !== action.id)
-            debugger
-            return a
+            return state.cardPacks.filter((p: any) => p._id !== action.id)
         default:
             return state
     }
 }
 
 // actions
-export const setPacksAC = (cardPacks: string) => ({type: 'SET-PACKS', cardPacks} as const)
+export const setPacksAC = (cardPacks: Array<any>) => ({type: 'SET-PACKS', cardPacks} as const)
 export const addPackAC = (newPackTitle: string) => ({type: 'ADD-PACK', newPackTitle} as const)
 export const deletePackAC = (id: string) => ({type: 'DELETE-PACK', id} as const)
 

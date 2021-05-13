@@ -1,15 +1,25 @@
 import React, {ChangeEvent, useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setPacksAC } from "../../../m2-bll/packReducer";
+import { searchTC } from "../../../m2-bll/searchReducer";
+import { AppRootStateType } from "../../../m2-bll/store";
 import {Button} from "../../common/Button/Button";
 
+type SearchPackType = {
+    cardPacks: any
+    newPackTitle: null | string
+    id: string
+}
+
 export let SearchPack = () => {
-    let array = ["один", "два", "три", "четыре", "пять"]
+
+    const dispatch = useDispatch();
+    const cardPacks = useSelector<AppRootStateType, SearchPackType>(state => state.packs.cardPacks);
 
     const [filter, setFilter] = useState("")
 
-    let setWord = () => {
-        return array.filter((word) => {
-            return word == filter ? word : "no results were found for your search"
-        })
+    let setSearch = () => {
+      dispatch(searchTC(filter));
     }
 
     let onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,8 +36,12 @@ export let SearchPack = () => {
         </div>
         <Button
             label={"search"}
-            onClick={setWord}
+            onClick={setSearch}
             backgroundColor={'blue'}
         />
     </div>
+}
+
+function searchPackNameAC(cardPacks: any): any {
+    throw new Error("Function not implemented.");
 }
