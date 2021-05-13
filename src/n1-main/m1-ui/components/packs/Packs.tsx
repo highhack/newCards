@@ -4,6 +4,8 @@ import {Button} from "../../common/Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {addPackTC, deletePackTC, getPacksTC} from "../../../m2-bll/packReducer";
 import {AppRootStateType} from "../../../m2-bll/store";
+import {SearchPack} from "../SearchPack/SearchPack";
+import {SearchTable} from "../SearchPack/SearchTable";
 
 
 type PacksType = {
@@ -49,6 +51,8 @@ const Packs = () => {
     else {
         return (
             <div>
+                <SearchPack />
+                <SearchTable />;
                 { (packTitle)
                     ? <div>
                         <input
