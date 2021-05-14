@@ -23,6 +23,15 @@ export const  Api = {
         return promise
             .then(response =>   response.data)
     },
+        getCards(packId: string) {
+            let promise =  instance.get(`cards/card?&cardsPack_id=${packId}&pageCount=10`);
+            return promise
+                .then(response => response.data)
+    },
+    postNewCard(question: string, answer: string) {
+        return instance.post(`cards/card`, {addCard: {question: question, answer: answer}})
+            .then(response =>   response.data)
+    },
     me() {
         const promise = instance.get('auth/me');
         return promise;

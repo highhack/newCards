@@ -42,18 +42,15 @@ const setAppErrorAC = (error: string | null) => ({
 
 // thunks
 export const forgotPasswordTC = (email: string) => {
-    debugger
     return (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
         dispatch(forgotPasswordAC(true))
         cardAPI.forgotPassword(email)
             .then((res: any) => {
-                debugger
                 dispatch(setAppStatusAC('succeeded'))
                 dispatch(setAppErrorAC(null))
             }).catch(e => {
             const error = e.response?e.response.data.error:(e.message + ', more details in the console');
-            debugger
             dispatch(setAppErrorAC(error))
             dispatch(setAppStatusAC('failed'))
         }).finally(()=>{
@@ -66,10 +63,8 @@ export const forgotPasswordTC = (email: string) => {
 
 export const authMeTC =()=>(dispatch: ThunkDispatch)=>{
     cardAPI.authMe().then((res: any) => {
-        debugger
     }).catch(e => {
         const error = e.response?e.response.data.error:(e.message + ', more details in the console');
-        debugger
     }).finally(()=>{
         }
     )

@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './App.css';
 import {BrowserRouter} from "react-router-dom";
 import Header from "./header/Header";
 import Routes from "./routes/Routes";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../m2-bll/store";
-import {initializeAppTC, RequestStatusType} from "../m2-bll/appReducer";
+// import {useDispatch, useSelector} from "react-redux";
+// import {AppRootStateType} from "../m2-bll/store";
+// import {initializeAppTC, RequestStatusType} from "../m2-bll/appReducer";
 
 
 const App = () => {

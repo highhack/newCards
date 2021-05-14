@@ -1,7 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import s from './Header.module.css';
-import {Login} from "../components/login/Login";
 
 const Header = () => {
     return (
@@ -13,7 +12,7 @@ const Header = () => {
                 <NavLink to='/Registration' activeClassName={s.active}>Registration</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to='/Page3' activeClassName={s.active}>Page3</NavLink>
+                <NavLink to='/forgot-password' activeClassName={s.active}>Forgot Password</NavLink>
             </div>
             <div className={s.item}>
                 <NavLink to='/Profile' activeClassName={s.active}>Profile</NavLink>

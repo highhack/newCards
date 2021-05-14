@@ -18,7 +18,6 @@ export const cardAPI = {
     },
     authMe(){
         let promise = instance.post('auth/me', {});
-        debugger
         return promise;
     }
 }
