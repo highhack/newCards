@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback, useState, useEffect} from 'react';
+import React, { useCallback, useState, useEffect} from 'react';
 import {Button} from '../../common/Button/Button';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../m2-bll/store';
@@ -15,12 +15,13 @@ const ForgotPassword = React.memo(function ForgotPassword() {
     const statusApp =useSelector((store: AppRootStateType):RequestStatusType =>store.forgotPassword.status );
     const serverError =useSelector((store: AppRootStateType):string|null =>store.forgotPassword.error);
     const dispatch = useDispatch();
-    const onClick = useCallback(() => {dispatch(forgotPasswordTC(value))}, [value])
-    let a 
+    const onClick = useCallback(() => {
+        dispatch(forgotPasswordTC(value))
+    setValue('')}, [value, dispatch])
+
     useEffect(() => {
-debugger
         dispatch(authMeTC())
-    },[]);
+    },[dispatch]);
 
 
     return (

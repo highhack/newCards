@@ -4,14 +4,10 @@ import {Button} from "../../common/Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {addPackTC, deletePackTC, getPacksTC} from "../../../m2-bll/packReducer";
 import {AppRootStateType} from "../../../m2-bll/store";
-import {SearchPack} from "../SearchPack/SearchPack";
-import {SearchTable} from "../SearchPack/SearchTable";
+import {SearchPack} from "../searchPack/SearchPack";
+import {getCardsTC} from "../../../m2-bll/cardsReducer";
+import {NavLink} from "react-router-dom";
 
-
-type PacksType = {
-    writtenTitlePack: string
-    packTitle: string
-}
 
 const Packs = () => {
 
@@ -23,9 +19,9 @@ const Packs = () => {
     const addPackTitle = () => {
         setPackTitle(true)
     }
-    const hideTitlePack = () => {
-        setPackTitle(false)
-    }
+    // const hideTitlePack = () => {
+    //     setPackTitle(false)
+    // }
 
     useEffect(() => {
         const thunk = getPacksTC()
@@ -37,23 +33,28 @@ const Packs = () => {
     let cardPacks = packs.cardPacks
 
 
-
     const onChangePackTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setWrittenTitlePack(e.currentTarget.value);
     }
 
     const savePack = () => {
         dispatch(addPackTC(writtenTitlePack))
+        setWrittenTitlePack('')
     }
 
+    const showCards = (packId: string) => {
+        dispatch(getCardsTC(packId))
+    }
+
+    const deletePack = (packId: string) => {
+        dispatch(deletePackTC(packId))
+    }
 
     if (cardPacks === undefined) return <div>Not Found Packs</div>
     else {
         return (
             <div>
-                <SearchPack />
-                <SearchTable />;
-                { (packTitle)
+                {(packTitle)
                     ? <div>
                         <input
                             onChange={onChangePackTitle}
@@ -62,39 +63,38 @@ const Packs = () => {
                             className={s.inputTitlePack}/>
                         <Button onClick={savePack} label={'Save'}/></div>
                     : ''}
-            <table className={s.table}>
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Cards count</th>
-                    <th>Created</th>
-                    <th>Lest update</th>
-                    <th><Button onClick={addPackTitle} label={'Add Pack'}/></th>
-                </tr>
-                </thead>
-                {cardPacks.map((p: any) => {
-                    const deletePack = () => {
-                       let a =  dispatch(deletePackTC(p._id))
-                        return a
-                    }
-                    return <tbody key={p._id} className={s.packData}>
+                <SearchPack/>
+                <table className={s.table}>
+                    <thead>
                     <tr>
-                        <td>{p.name}</td>
-                        <td>{p.cardsCount}</td>
-                        <td>{p.created}</td>
-                        <td>{p.updated}</td>
-                        <td><Button label={'Update'}/></td>
-                        <td>
-                            <Button
-                                id={p._id}
-                                onClick={deletePack}
-                                label={'Delete'}/>
-                        </td>
+                        <th>Name</th>
+                        <th>Cards count</th>
+                        <th>Created</th>
+                        <th>Lest update</th>
+                        <th><Button onClick={addPackTitle} label={'Add Pack'}/></th>
                     </tr>
-                    </tbody>
-                })
-                }
-            </table>
+                    </thead>
+                    {cardPacks.map((p: any) => {
+                        return <tbody key={p._id} className={s.packData}>
+                        <tr>
+                            <td>{p.name}</td>
+                            <td>{p.cardsCount}</td>
+                            <td>{p.created}</td>
+                            <td>{p.updated}</td>
+                            <td><Button label={'Update'}/></td>
+                            <td>
+                                <Button
+                                    onClick={() => deletePack(p._id)}
+                                    label={'Delete'}/>
+                            </td>
+                            <td>
+                                <NavLink to='/cards' onClick={() => showCards(p._id)}>Cards</NavLink>
+                            </td>
+                        </tr>
+                        </tbody>
+                    })
+                    }
+                </table>
             </div>
         );
     }
