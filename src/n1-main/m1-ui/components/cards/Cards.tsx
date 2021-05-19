@@ -3,7 +3,7 @@ import s from './Cards.module.css'
 import {Button} from "../../common/Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
-import {SearchPack} from "../searchPack/SearchPack";
+import {SearchPack} from "../SearchPack/SearchPack";
 import {addCardTC} from "../../../m2-bll/cardsReducer";
 
 

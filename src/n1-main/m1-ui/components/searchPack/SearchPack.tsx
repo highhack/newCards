@@ -1,7 +1,6 @@
 import React, {ChangeEvent, useState} from "react";
 import {useDispatch} from "react-redux";
 import {searchTC} from "../../../m2-bll/searchReducer";
-// import { AppRootStateType } from "../../../m2-bll/store";
 import {Button} from "../../common/Button/Button";
 import s from './searchPack.module.css'
 

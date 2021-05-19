@@ -10,8 +10,8 @@ export const  Api = {
         return instance.post('auth/register', {email, password})
             .then(response =>   response.data)
     },
-    getPacks() {
-        return instance.get<GetCardPackResponseType>(`cards/pack?pageCount=10`)
+    getPacks(pageCount: number, page: number) {
+        return instance.get<GetCardPackResponseType>(`cards/pack?page=${pageCount}&count=${page}`)
             .then(response =>   response.data)
     },
     postNewPack(title: string) {
@@ -39,6 +39,8 @@ export const  Api = {
 }
 
 type GetCardPackResponseType = {
+    // pageCount: number
+    // page: number
     [key: string] : Array<CardPackType>
 }
 

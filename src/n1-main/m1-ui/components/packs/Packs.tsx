@@ -2,18 +2,26 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import s from './Packs.module.css'
 import {Button} from "../../common/Button/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {addPackTC, deletePackTC, getPacksTC} from "../../../m2-bll/packReducer";
+import {getPacksTC} from "../../../m2-bll/packReducer";
 import {AppRootStateType} from "../../../m2-bll/store";
-import {SearchPack} from "../searchPack/SearchPack";
 import {getCardsTC} from "../../../m2-bll/cardsReducer";
 import {NavLink} from "react-router-dom";
+import {SearchPack} from "../SearchPack/SearchPack";
+import {SearchTable} from "../SearchPack/SearchTable";
+import {Paginator} from "../SearchPack/Paginator";
 
+// type PropsType = {
+//     page: number
+//     pageCount: number
+// }
 
 const Packs = () => {
 
     let [writtenTitlePack, setWrittenTitlePack] = useState('')
     let [packTitle, setPackTitle] = useState(false)
 
+    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount);
+    const currentPage = useSelector<AppRootStateType, number>(state => state.packs.page);
     const dispatch = useDispatch()
 
     const addPackTitle = () => {
@@ -24,7 +32,7 @@ const Packs = () => {
     // }
 
     useEffect(() => {
-        const thunk = getPacksTC()
+        const thunk = getPacksTC(pageCount, currentPage)
         dispatch(thunk)
     }, [dispatch])
 
@@ -38,7 +46,7 @@ const Packs = () => {
     }
 
     const savePack = () => {
-        dispatch(addPackTC(writtenTitlePack))
+        // dispatch(addPackTC(writtenTitlePack))
         setWrittenTitlePack('')
     }
 
@@ -47,11 +55,12 @@ const Packs = () => {
     }
 
     const deletePack = (packId: string) => {
-        dispatch(deletePackTC(packId))
+        // dispatch(deletePackTC(packId))
     }
 
     if (cardPacks === undefined) return <div>Not Found Packs</div>
     else {
+        // @ts-ignore
         return (
             <div>
                 {(packTitle)
@@ -64,6 +73,7 @@ const Packs = () => {
                         <Button onClick={savePack} label={'Save'}/></div>
                     : ''}
                 <SearchPack/>
+                <SearchTable />
                 <table className={s.table}>
                     <thead>
                     <tr>
@@ -95,6 +105,8 @@ const Packs = () => {
                     })
                     }
                 </table>
+                111111111
+                <Paginator />
             </div>
         );
     }
