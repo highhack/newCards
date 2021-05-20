@@ -60,7 +60,6 @@ const Packs = () => {
 
     if (cardPacks === undefined) return <div>Not Found Packs</div>
     else {
-        // @ts-ignore
         return (
             <div>
                 {(packTitle)
@@ -105,7 +104,6 @@ const Packs = () => {
                     })
                     }
                 </table>
-                111111111
                 <Paginator />
             </div>
         );

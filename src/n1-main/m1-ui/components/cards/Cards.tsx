@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {SearchPack} from "../SearchPack/SearchPack";
 import {addCardTC} from "../../../m2-bll/cardsReducer";
+import { Paginator } from "../SearchPack/Paginator";
 
 
 
@@ -93,6 +94,7 @@ const Cards = () => {
                     })
                     }
                 </table>
+                <Paginator />
             </div>
         );
     }

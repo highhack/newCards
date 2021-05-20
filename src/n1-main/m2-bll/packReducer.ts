@@ -8,15 +8,17 @@ type InitialStateType = {
     cardPacksTotalCount: number
     pageCount?: number
     page?: number
+    portionSize: number
 
 }
 const initialState: InitialStateType = {
     cardPacks: [],
     newPackTitle: null,
     id: '',
-    cardPacksTotalCount: 14,
-    pageCount: 4,
-    page: 1
+    cardPacksTotalCount: 140,
+    pageCount: 10,
+    page: 1,
+    portionSize: 5
 }
 
 export const packReducer = (state: InitialStateType = initialState, action: ActionsType) => {
