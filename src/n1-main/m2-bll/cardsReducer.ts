@@ -1,21 +1,20 @@
 import {Dispatch} from 'redux'
-import {Api} from "../m3-dal/api";
+import {Api, CardType} from "../m3-dal/api";
 
 type InitialStateType = {
-    cards: any
-    newCardsTitle: null | string
-    id: string
+    cards: Array<CardType>
+    packId: string
+
 }
 const initialState: InitialStateType = {
     cards: [],
-    newCardsTitle: null,
-    id: ''
+    packId: ''
 }
 
 export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case 'SET-CARDS':
-            return {...state, cards: action.cards}
+            return {...state, cards: action.cards, packId: action.packId}
         // case 'ADD-CARD':
         //     return {...state, newCardsTitle: action.newCardsTitle}
         // case 'DELETE-CARD':
@@ -26,7 +25,7 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
 }
 
 // actions
-export const setCardsAC = (cards: Array<any>) => ({type: 'SET-CARDS', cards} as const)
+export const setCardsAC = (cards: Array<any>, packId: string) => ({type: 'SET-CARDS', cards, packId} as const)
 export const addCardAC = (newCardTitle: string) => ({type: 'ADD-CARD', newCardTitle} as const)
 export const deleteCardAC = (id: string) => ({type: 'DELETE-CARD', id} as const)
 
@@ -35,33 +34,34 @@ export const deleteCardAC = (id: string) => ({type: 'DELETE-CARD', id} as const)
 export const getCardsTC = (packId: string) => {
     return (dispatch: ThunkDispatch) => {
         Api.getCards(packId)
-            .then((data: any) => {
-                dispatch(setCardsAC(data.cards))
+            .then((data) => {
+               return dispatch(setCardsAC(data.cards,packId ))
             })
     }
 }
-export const addCardTC = (question: string, answer: string) => {
+export const addCardTC = (question: string, answer: string, packId: string) => {
     return (dispatch: ThunkDispatch) => {
-        Api.postNewCard(question, answer)
-            // .then((data) => {
-            //     Api.getCards()
-            //         .then((data: any) => {
-            //             dispatch(setCardsAC(data.card))
-            //         })
-            // })
+        Api.postNewCard(question, answer, packId)
+            .then((data) => {
+                Api.getCards(packId)
+                    .then((data) => {
+                        dispatch(setCardsAC(data.cards, packId))
+                    })
+            })
     }
 }
-// export const deleteCardsTC = (id: string) => {
-//     return (dispatch: ThunkDispatch) => {
-//         Api.deleteCard(id)
-//             .then((data) => {
-//                 Api.getCards()
-//                     .then((data: any) => {
-//                         dispatch(setCardsAC(data.cardPacks))
-//                     })
-//             })
-//     }
-// }
+export const deleteCardsTC = (id: string, packId: string) => {
+    return (dispatch: ThunkDispatch) => {
+        Api.deleteCard(id)
+            .then((data) => {
+                Api.getCards(packId)
+                    .then((data: any) => {
+                        dispatch(setCardsAC(data.cards, packId))
+                    })
+            })
+    }
+}
+
 
 // types
 export type setCardsACType = ReturnType<typeof setCardsAC>;

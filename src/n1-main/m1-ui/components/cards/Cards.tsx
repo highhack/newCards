@@ -4,53 +4,60 @@ import {Button} from "../../common/Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {SearchPack} from "../searchPack/SearchPack";
-import {addCardTC} from "../../../m2-bll/cardsReducer";
+import {NavLink} from "react-router-dom";
+import {CardType} from "../../../m3-dal/api";
+import {addCardTC, deleteCardsTC} from "../../../m2-bll/cardsReducer";
 
 
 
 const Cards = () => {
 
-    let [question, setQuestion]= useState('')
-    let [answer, setAnswer]= useState('')
+    let [question, setQuestion] = useState('')
+    let [answer, setAnswer] = useState('')
     let [cardTitle, setCardTitle] = useState(false)
 
-    const cardsData = useSelector<AppRootStateType, any>(state => state.cards)
-    let cards = cardsData.cards
-
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn);
+    const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards)
+    const packId = useSelector<AppRootStateType, string>(state => state.cards.packId)
     const dispatch = useDispatch()
 
     const addCard = () => {
         setCardTitle(true)
     }
-    // const hideTitlePack = () => {
-    //     setPackTitle(false)
-    // }
-
-
     const onChangeQuestion = (e: ChangeEvent<HTMLInputElement>) => {
         setQuestion(e.currentTarget.value);
     }
     const onChangeAnswer = (e: ChangeEvent<HTMLInputElement>) => {
         setAnswer(e.currentTarget.value);
     }
-
     const saveCard = () => {
-        dispatch(addCardTC(question, answer))
+        dispatch(addCardTC(question, answer, packId))
+    }
+    const deleteCard = (id: string, packId: string) => {
+        dispatch(deleteCardsTC(id, packId))
     }
 
 
-    if (cards === undefined) return <div>Not Found Packs</div>
+    if (!isLoggedIn)
+        return (
+            <div>
+                <div>
+                    You are not authorized
+                </div>
+                <NavLink to='/login'>Login</NavLink>
+            </div>
+        )
     else {
         return (
             <div>
-                { (cardTitle)
+                {(cardTitle)
                     ? <div>
                         <input
                             onChange={onChangeQuestion}
                             placeholder={'Enter question'}
                             value={question}
                             className={s.inputQuestion}/>
-                            <input
+                        <input
                             onChange={onChangeAnswer}
                             placeholder={'Enter answer'}
                             value={answer}
@@ -58,9 +65,9 @@ const Cards = () => {
                         <Button
                             onClick={saveCard}
                             label={'Save'}/>
-                </div>
+                    </div>
                     : ''}
-                <SearchPack />
+                <SearchPack/>
                 <table className={s.table}>
                     <thead>
                     <tr>
@@ -70,27 +77,28 @@ const Cards = () => {
                         <th>Shots</th>
                         <th><Button
                             onClick={addCard}
-                            label={'Add Pack'}/>
+                            label={'Add Card'}/>
                         </th>
                     </tr>
                     </thead>
-                    {cards.map((p: any) => {
-                        return <tbody key={p.cardsPack_id} className={s.packData}>
-                        <tr>
-                            <td>{p.answer}</td>
-                            <td>{p.question}</td>
-                            <td>{p.grade}</td>
-                            <td>{p.shots}</td>
-                            <td><Button label={'Update'}/></td>
-                            <td>
-                                <Button
-                                    id={p.cardsPack_id}
-                                    // onClick={deletePack}
-                                    label={'Delete'}/>
-                            </td>
-                        </tr>
-                        </tbody>
-                    })
+                    {cards.length === 0
+                        ? <div>Not Found Cards</div>
+                        : cards.map(p => {
+                            return <tbody key={p.cardsPack_id} className={s.packData}>
+                            <tr>
+                                <td>{p.question}</td>
+                                <td>{p.answer}</td>
+                                <td>{p.grade}</td>
+                                <td>{p.shots}</td>
+                                <td><Button label={'Update'}/></td>
+                                <td>
+                                    <Button
+                                        onClick={() => deleteCard(p._id, packId)}
+                                        label={'Delete'}/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        })
                     }
                 </table>
             </div>

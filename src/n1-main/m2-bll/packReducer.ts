@@ -63,6 +63,20 @@ export const deletePackTC = (id: string) => {
     }
 }
 
+export const updatePackTitleTC = (newPackName: string, packId: string) => {
+    return (dispatch: ThunkDispatch) => {
+        Api.updatePack(newPackName, packId)
+            .then((data) => {
+                debugger
+                Api.getPacks()
+                    .then((data: any) => {
+                        debugger
+                        dispatch(setPacksAC(data.cardPacks))
+                    })
+            })
+    }
+}
+
 // types
 export type setPacksACType = ReturnType<typeof setPacksAC>;
 export type addPackACType = ReturnType<typeof addPackAC>;

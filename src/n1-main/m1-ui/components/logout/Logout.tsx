@@ -6,6 +6,7 @@ import {Redirect} from "react-router-dom";
 import {Button} from "../../common/Button/Button";
 
 
+
 type LoginActionType = {
     email: string
     password: string
@@ -28,7 +29,7 @@ export const Logout = React.memo(() => {
         if (!isLoggedIn) {
             return <Redirect to={"/Login"}/>
         }
-
+        else
         return <div>
             <Button
                 label={'Logout'}
