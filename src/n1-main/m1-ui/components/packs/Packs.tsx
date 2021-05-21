@@ -6,9 +6,9 @@ import {getPacksTC} from "../../../m2-bll/packReducer";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {getCardsTC} from "../../../m2-bll/cardsReducer";
 import {NavLink} from "react-router-dom";
-import {SearchPack} from "../SearchPack/SearchPack";
-import {SearchTable} from "../SearchPack/SearchTable";
-import {Paginator} from "../SearchPack/Paginator";
+import {SearchPack} from "../searchPack/SearchPack";
+import {SearchTable} from "../searchPack/SearchTable";
+import {Paginator} from "../searchPack/Paginator";
 
 // type PropsType = {
 //     page: number
@@ -20,21 +20,18 @@ const Packs = () => {
     let [writtenTitlePack, setWrittenTitlePack] = useState('')
     let [packTitle, setPackTitle] = useState(false)
 
-    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount);
+    // const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount);
     const currentPage = useSelector<AppRootStateType, number>(state => state.packs.page);
     const dispatch = useDispatch()
 
     const addPackTitle = () => {
         setPackTitle(true)
     }
-    // const hideTitlePack = () => {
-    //     setPackTitle(false)
-    // }
 
     useEffect(() => {
-        const thunk = getPacksTC(pageCount, currentPage)
+        const thunk = getPacksTC(currentPage)
         dispatch(thunk)
-    }, [dispatch])
+    }, [dispatch, currentPage])
 
 
     const packs = useSelector<AppRootStateType, any>(state => state.packs)

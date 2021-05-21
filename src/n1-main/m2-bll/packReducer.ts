@@ -52,9 +52,9 @@ export const setCardPacksTotalCount = (cardPacksTotalCount: number) => ({
 
 
 // thunks
-export const getPacksTC = (pageCount: number, page: number) => {
+export const getPacksTC = (page: number) => {
     return (dispatch: ThunkDispatch) => {
-        Api.getPacks(pageCount, page)
+        Api.getPacks( page)
             .then((data: any) => {
                 dispatch(setPacksAC(data.cardPacks))
                 dispatch(setCurrentPage(data.page))
@@ -65,7 +65,7 @@ export const addPackTC = (title: string, pageCount: number, page: number) => {
     return (dispatch: ThunkDispatch) => {
         Api.postNewPack(title)
             .then((data) => {
-                Api.getPacks(pageCount, page)
+                Api.getPacks(page)
                     .then((data: any) => {
                         dispatch(setPacksAC(data.cardPacks))
                     })
@@ -76,7 +76,7 @@ export const deletePackTC = (id: string, pageCount: number, page: number) => {
     return (dispatch: ThunkDispatch) => {
         Api.deletePack(id)
             .then((data) => {
-                Api.getPacks(pageCount, page)
+                Api.getPacks(page)
                     .then((data: any) => {
                         dispatch(setPacksAC(data.cardPacks))
                     })

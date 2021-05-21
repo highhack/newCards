@@ -20,7 +20,7 @@ import { getPacksTC } from "../../../m2-bll/packReducer";
 export let Paginator = () => {
 
     const portionSize = useSelector<AppRootStateType, number>(state => state.packs.portionSize);
-    const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount);
+    // const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount);
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount);
     const currentPage = useSelector<AppRootStateType, number>(state => state.packs.page);
 
@@ -30,15 +30,15 @@ export let Paginator = () => {
     let pagesCount = Math.ceil(cardPacksTotalCount / portionSize);
     let pages = [];
 
-   const onPageChanged =  (e: any) => {
-        dispatch(getPacksTC(pageCount, currentPage))
+   const onPageChanged =  (currentPage: number) => {
+        dispatch(getPacksTC(currentPage))
     }
 
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
 
-    let portionCount = Math.ceil(pagesCount / pageCount);
+    let portionCount = Math.ceil(pagesCount / 10);
     let [portionNumber, setPortionNumber] = useState<number>(1);
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize;
