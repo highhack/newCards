@@ -1,20 +1,26 @@
 import {Dispatch} from 'redux'
 import {Api, CardType} from "../m3-dal/api";
 
+
 type InitialStateType = {
     cards: Array<CardType>
     packId: string
+    cardId: string
 
 }
 const initialState: InitialStateType = {
     cards: [],
-    packId: ''
+    packId: '',
+    cardId:''
 }
 
 export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case 'SET-CARDS':
             return {...state, cards: action.cards, packId: action.packId}
+        case 'SET-CARD-ID':
+            let a =  {...state, cardId: action.cardId}
+            return a
         // case 'ADD-CARD':
         //     return {...state, newCardsTitle: action.newCardsTitle}
         // case 'DELETE-CARD':
@@ -26,8 +32,8 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
 
 // actions
 export const setCardsAC = (cards: Array<any>, packId: string) => ({type: 'SET-CARDS', cards, packId} as const)
-export const addCardAC = (newCardTitle: string) => ({type: 'ADD-CARD', newCardTitle} as const)
 export const deleteCardAC = (id: string) => ({type: 'DELETE-CARD', id} as const)
+export const setCardIdAC = (cardId: string) => ({type: 'SET-CARD-ID', cardId} as const)
 
 
 // thunks
@@ -62,14 +68,26 @@ export const deleteCardsTC = (id: string, packId: string) => {
     }
 }
 
+export const updateCardTitleTC = (quesrion: string,answer: string, cardId: string, packId: string) => {
+    return (dispatch: ThunkDispatch) => {
+        Api.updateCard(quesrion,answer, cardId)
+            .then((data) => {
+                Api.getCards(packId)
+                    .then((data: any) => {
+                        dispatch(setCardsAC(data.cards, packId))
+                    })
+            })
+    }
+}
+
 
 // types
 export type setCardsACType = ReturnType<typeof setCardsAC>;
-export type addCardACType = ReturnType<typeof addCardAC>;
 export type deleteCardACType = ReturnType<typeof deleteCardAC>;
+export type setCardIdACType = ReturnType<typeof setCardIdAC>;
 type ActionsType =
     | setCardsACType
-    // | addCardACType
+    | setCardIdACType
     // | deleteCardACType
 
 type ThunkDispatch = Dispatch<ActionsType>

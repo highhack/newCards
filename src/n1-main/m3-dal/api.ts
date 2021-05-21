@@ -43,8 +43,12 @@ export const Api = {
             .then(response => response.data)
     },
     deleteCard(id: string) {
-        debugger
         let promise = instance.delete(`cards/card?id=${id}`)
+        return promise
+            .then(response => response.data)
+    },
+    updateCard(question: string, answer: string, id: string) {
+        let promise = instance.put<any>(`cards/card`, {card: {_id: id , question: question, answer: answer}})
         return promise
             .then(response => response.data)
     }

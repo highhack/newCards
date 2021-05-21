@@ -5,11 +5,13 @@ type InitialStateType = {
     cardPacks: any
     newPackTitle: null | string
     id: string
+    packId: string
 }
 const initialState: InitialStateType = {
     cardPacks: [],
     newPackTitle: null,
-    id: ''
+    id: '',
+    packId: ''
 }
 
 export const packReducer = (state: InitialStateType = initialState, action: ActionsType) => {
@@ -20,6 +22,9 @@ export const packReducer = (state: InitialStateType = initialState, action: Acti
             return {...state, newPackTitle: action.newPackTitle}
         case 'DELETE-PACK':
             return state.cardPacks.filter((p: any) => p._id !== action.id)
+        case 'SET-PACK-ID':
+            let a =  {...state, packId: action.packId}
+            return a
         default:
             return state
     }
@@ -29,6 +34,7 @@ export const packReducer = (state: InitialStateType = initialState, action: Acti
 export const setPacksAC = (cardPacks: Array<any>) => ({type: 'SET-PACKS', cardPacks} as const)
 export const addPackAC = (newPackTitle: string) => ({type: 'ADD-PACK', newPackTitle} as const)
 export const deletePackAC = (id: string) => ({type: 'DELETE-PACK', id} as const)
+export const setPackIdAC = (packId: string) => ({type: 'SET-PACK-ID', packId} as const)
 
 
 // thunks
@@ -67,10 +73,8 @@ export const updatePackTitleTC = (newPackName: string, packId: string) => {
     return (dispatch: ThunkDispatch) => {
         Api.updatePack(newPackName, packId)
             .then((data) => {
-                debugger
                 Api.getPacks()
                     .then((data: any) => {
-                        debugger
                         dispatch(setPacksAC(data.cardPacks))
                     })
             })
@@ -81,9 +85,11 @@ export const updatePackTitleTC = (newPackName: string, packId: string) => {
 export type setPacksACType = ReturnType<typeof setPacksAC>;
 export type addPackACType = ReturnType<typeof addPackAC>;
 export type deletePackACType = ReturnType<typeof deletePackAC>;
+export type SetPackIdACType = ReturnType<typeof setPackIdAC>;
 type ActionsType =
     | setPacksACType
     | addPackACType
     | deletePackACType
+    | SetPackIdACType
 
 type ThunkDispatch = Dispatch<ActionsType>

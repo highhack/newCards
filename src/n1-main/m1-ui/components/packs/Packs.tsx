@@ -2,7 +2,7 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import s from './Packs.module.css'
 import {Button} from "../../common/Button/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {addPackTC, deletePackTC, getPacksTC, updatePackTitleTC} from "../../../m2-bll/packReducer";
+import {addPackTC, deletePackTC, getPacksTC, setPackIdAC, updatePackTitleTC} from "../../../m2-bll/packReducer";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {SearchPack} from "../searchPack/SearchPack";
 import {getCardsTC} from "../../../m2-bll/cardsReducer";
@@ -10,12 +10,11 @@ import {NavLink} from "react-router-dom";
 import {CardPackType} from "../../../m3-dal/api";
 
 
-const Packs = () => {
+const Packs = React.memo(() => {
     const cardPacks = useSelector<AppRootStateType, Array<CardPackType>>(state => state.packs.cardPacks)
     const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn);
-
-
+    let packId = useSelector<AppRootStateType, string>(state => state.packs.packId);
 
     let [writtenTitlePack, setWrittenTitlePack] = useState('')
     let [inputPackTitle, setInputPackTitle] = useState(false)
@@ -28,19 +27,15 @@ const Packs = () => {
         setInputPackTitle(true)
     }
 
-    let packId: string
 
     const changeTitle = (id: string) => {
-        debugger
         setInputChangeTitle(true)
         let pack = cardPacks.find((p) => p._id === id)
-        if (pack !== undefined) {setChangeTitle(pack.name)
-            packId = pack._id}
-         return packId
+        if (pack !== undefined) {
+            setChangeTitle(pack.name)
+            dispatch(setPackIdAC(pack._id))
+        }
     }
-
-
-
 
 
     useEffect(() => {
@@ -59,6 +54,7 @@ const Packs = () => {
     const savePack = () => {
         dispatch(addPackTC(writtenTitlePack))
         setWrittenTitlePack('')
+        setInputPackTitle(false)
     }
 
     const showCards = (packId: string) => {
@@ -69,12 +65,9 @@ const Packs = () => {
         dispatch(deletePackTC(packId))
     }
     const updateTitle = () => {
-        debugger
-        let id = changeTitle(packId)
-        debugger
-        dispatch(updatePackTitleTC(ChangeTitle, id))
+        dispatch(updatePackTitleTC(ChangeTitle, packId))
+        setInputChangeTitle(false)
     }
-
 
 
     if (!isLoggedIn)
@@ -90,25 +83,33 @@ const Packs = () => {
 
     return (
         <div>
-            {(inputPackTitle)
-                ? <div>
+            {(inputPackTitle) &&
+            <div>
+                <div className={s.backgroundForWindow}>{}</div>
+                <div className={s.inputWindow}>
                     <input
                         onChange={onChangePackTitle}
-                        placeholder={'Please enter the name of new pack'}
+                        placeholder={'Please enter new name'}
                         value={writtenTitlePack}
                         className={s.inputTitlePack}/>
-                    <Button onClick={savePack} label={'Save'}/></div>
-                : ''}
-                {(inputChangeTitle)
-                ? <div>
-                    <input
-                        onChange={doChangesInTitle}
-                        value={ChangeTitle}
-                        className={s.inputChangeTitlePack}/>
-                    <Button
-                        onClick={updateTitle}
-                        label={'Update'}/></div>
-                : ''}
+                    <Button onClick={savePack} backgroundColor={'blue'} size={"large"} label={'Save'}/>
+                </div>
+            </div>}
+            {(inputChangeTitle) &&
+                <div>
+                    <div className={s.backgroundForWindow}>{}</div>
+                    <div className={s.inputWindow}>
+                        <input
+                            onChange={doChangesInTitle}
+                            value={ChangeTitle}
+                            className={s.inputChangeTitlePack}/>
+                        <Button
+                            onClick={updateTitle}
+                            label={'Update'}
+                            backgroundColor={'blue'}
+                            size={"large"}/>
+                    </div>
+                </div>}
             <SearchPack/>
             <table className={s.table}>
                 <thead>
@@ -121,7 +122,7 @@ const Packs = () => {
                 </tr>
                 </thead>
                 {cardPacks.map((p: any) => {
-                    return <tbody key={p._id} className={s.packData}>
+                    return <tbody  className={s.packData}>
                     <tr>
                         <td>{p.name}</td>
                         <td>{p.cardsCount}</td>
@@ -147,7 +148,7 @@ const Packs = () => {
             </table>
         </div>
     );
-}
+})
 
 
 export default Packs;
