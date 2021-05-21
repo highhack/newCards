@@ -170,4 +170,5 @@ const Packs = React.memo(() => {
 })
 
 
+// @ts-ignore
 export default Packs;
