@@ -3,8 +3,9 @@ import s from './Cards.module.css'
 import {Button} from "../../common/Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
-import {SearchPack} from "../searchPack/SearchPack";
 import {addCardTC} from "../../../m2-bll/cardsReducer";
+import { SearchPack } from "../SearchPack/SearchPack";
+import { Paginator } from "../SearchPack/Paginator";
 
 
 
@@ -93,6 +94,7 @@ const Cards = () => {
                     })
                     }
                 </table>
+                <Paginator />
             </div>
         );
     }

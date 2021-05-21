@@ -1,41 +1,14 @@
-import { Table } from "antd";
-import React from "react";
+import {Slider} from 'antd';
+import React from 'react';
+import 'antd/dist/antd.css';
+import s from './searchPack.module.css'
 
-const dataSource = [
-    {
-        key: '1',
-        name: 'Mike',
-        age: 32,
-        address: '10 Downing Street',
-    },
-    {
-        key: '2',
-        name: 'John',
-        age: 42,
-        address: '10 Downing Street',
-    },
-];
 
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-    },
-];
 
 export const SearchTable = () => {
-    
-    return <Table dataSource={dataSource} columns={columns} />;
+
+    return <div className={s.search_table}>
+        <Slider className={s.slider} range={{draggableTrack: true}} defaultValue={[20, 50]}/>
+    </div>
 }
 

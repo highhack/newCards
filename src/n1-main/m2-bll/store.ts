@@ -5,6 +5,7 @@ import {registerReducer} from "./registerReducer";
 import {loginReducer} from "./loginReducer";
 import { forgotReducer } from './forgotReducer';
 import {cardsReducer} from "./cardsReducer";
+import { searchReducer } from './searchReducer';
 
 
 const rootReducer = combineReducers({
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     register: registerReducer,
     login: loginReducer,
     forgotPassword: forgotReducer,
-    cards: cardsReducer
+    cards: cardsReducer,
+    search: searchReducer
 })
 // непосредственно создаём store
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
