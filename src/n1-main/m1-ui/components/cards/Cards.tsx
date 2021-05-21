@@ -6,7 +6,6 @@ import {AppRootStateType} from "../../../m2-bll/store";
 import {SearchPack} from "../searchPack/SearchPack";
 import {CardType} from "../../../m3-dal/api";
 import {addCardTC, deleteCardsTC, setCardIdAC, updateCardTitleTC} from "../../../m2-bll/cardsReducer";
-import {addCardTC} from "../../../m2-bll/cardsReducer";
 import { Paginator } from "../searchPack/Paginator";
 
 

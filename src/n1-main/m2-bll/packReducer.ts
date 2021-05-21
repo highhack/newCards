@@ -16,8 +16,7 @@ const initialState: InitialStateType = {
     cardPacks: [],
     newPackTitle: null,
     id: '',
-    packId: ''
-    id: '',
+    packId: '',
     cardPacksTotalCount: 140,
     pageCount: 10,
     page: 1,
@@ -68,7 +67,7 @@ export const getPacksTC = (page: number) => {
             })
     }
 }
-export const addPackTC = (title: string, pageCount: number, page: number) => {
+export const addPackTC = (title: string, page: number) => {
     return (dispatch: ThunkDispatch) => {
         Api.postNewPack(title)
             .then((data) => {
@@ -79,7 +78,7 @@ export const addPackTC = (title: string, pageCount: number, page: number) => {
             })
     }
 }
-export const deletePackTC = (id: string, pageCount: number, page: number) => {
+export const deletePackTC = (id: string, page: number) => {
     return (dispatch: ThunkDispatch) => {
         Api.deletePack(id)
             .then((data) => {
@@ -91,11 +90,11 @@ export const deletePackTC = (id: string, pageCount: number, page: number) => {
     }
 }
 
-export const updatePackTitleTC = (newPackName: string, packId: string) => {
+export const updatePackTitleTC = (newPackName: string, packId: string, page: number) => {
     return (dispatch: ThunkDispatch) => {
         Api.updatePack(newPackName, packId)
             .then((data) => {
-                Api.getPacks()
+                Api.getPacks(page)
                     .then((data: any) => {
                         dispatch(setPacksAC(data.cardPacks))
                     })

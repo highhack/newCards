@@ -8,7 +8,6 @@ import {SearchPack} from "../searchPack/SearchPack";
 import {getCardsTC} from "../../../m2-bll/cardsReducer";
 import {NavLink} from "react-router-dom";
 import {CardPackType} from "../../../m3-dal/api";
-import {SearchPack} from "../searchPack/SearchPack";
 import {SearchTable} from "../searchPack/SearchTable";
 import {Paginator} from "../searchPack/Paginator";
 
@@ -48,16 +47,16 @@ const Packs = React.memo(() => {
 
 
     useEffect(() => {
-        const thunk = getPacksTC(currentPage)
-        dispatch(thunk)
-    }, [dispatch, currentPage])
-
-
-    const packs = useSelector<AppRootStateType, any>(state => state.packs)
-    let cardPacks = packs.cardPacks
         if (isInitialized)
-            dispatch(getPacksTC())
-    }, [dispatch, isInitialized])
+            dispatch(getPacksTC(currentPage))
+    }, [dispatch, isInitialized, currentPage])
+
+
+    // const packs = useSelector<AppRootStateType, any>(state => state.packs)
+    // let cardPacks = packs.cardPacks
+    //     if (isInitialized)
+    //         dispatch(getPacksTC())
+    // }, [dispatch, isInitialized])
 
 
     const onChangePackTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +67,7 @@ const Packs = React.memo(() => {
     }
 
     const savePack = () => {
-        dispatch(addPackTC(writtenTitlePack))
+        dispatch(addPackTC(writtenTitlePack, currentPage))
         setWrittenTitlePack('')
         setInputPackTitle(false)
     }
@@ -78,10 +77,10 @@ const Packs = React.memo(() => {
     }
 
     const deletePack = (packId: string) => {
-        dispatch(deletePackTC(packId))
+        dispatch(deletePackTC(packId, currentPage))
     }
     const updateTitle = () => {
-        dispatch(updatePackTitleTC(ChangeTitle, packId))
+        dispatch(updatePackTitleTC(ChangeTitle, packId, currentPage))
         setInputChangeTitle(false)
     }
 
@@ -127,6 +126,9 @@ const Packs = React.memo(() => {
                     </div>
                 </div>}
             <SearchPack/>
+            <div>
+                <SearchTable/>
+            </div>
             <table className={s.table}>
                 <thead>
                 <tr>
@@ -162,6 +164,7 @@ const Packs = React.memo(() => {
                 })
                 }
             </table>
+            <Paginator/>
         </div>
     );
 })

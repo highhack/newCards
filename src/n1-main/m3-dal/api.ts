@@ -11,7 +11,7 @@ export const  Api = {
             .then(response =>   response.data)
     },
     getPacks(page: number) {
-        return instance.get<GetCardPackResponseType>(`cards/pack?page=10&count=${page}`)
+        return instance.get<GetCardPackResponseType>(`cards/pack?pageCount=10&page=${page}`)
             .then(response =>   response.data)
     },
     postNewPack(title: string) {
@@ -47,6 +47,11 @@ export const  Api = {
         return promise
             .then(response => response.data)
     },
+    updateCard(question: string, answer: string, id: string) {
+        let promise = instance.put<any>(`cards/card`, {card: {_id: id , question: question, answer: answer}})
+        return promise
+            .then(response => response.data)
+    }
 }
 
 type GetCardPackResponseType = {
