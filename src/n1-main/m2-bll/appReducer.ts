@@ -11,14 +11,12 @@ const initialState: InitialStateType = {
 
 export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-
         case 'APP/SET-STATUS':
             return {...state, status: action.status}
         case 'APP/SET-ERROR':
             return {...state, error: action.error}
         case 'SET-IS-INITIALIZED':
-            let a = {...state, isInitialized: action.isInitialized }
-            return  a
+            return {...state, isInitialized: action.isInitialized}
         default:
             return {...state}
     }
@@ -26,18 +24,16 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     Api.me().then(res => {
-        // dispatch(setLoadingStatusAC('loading'))
-        dispatch(setAppInitializedAC(true))
+        if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true));
+            dispatch(setAppInitializedAC(true))
+        } else {
+            dispatch(setAppInitializedAC(true))
+        }
     })
-        .catch(error => {
-            // dispatch(setAppErrorAC(error.response.data.error))
-            dispatch(setAppInitializedAC(false))
-            // dispatch(setIsLoggedInAC(false))
+        .finally(() => {
+            dispatch(setAppInitializedAC(true))
         })
-        // .finally(() => {
-        //     dispatch(setLoadingStatusAC('succeeded'))
-        // })
 }
 
 export type RequestStatusType =  'idle' | 'loading' | 'succeeded' | 'failed'
@@ -55,9 +51,9 @@ export const setAppInitializedAC = (isInitialized:  boolean) => ({ type: 'SET-IS
 
 export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
 export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
-export type setAppInitializedType = ReturnType<typeof setAppInitializedAC>
+export type setAppInitializedtype = ReturnType<typeof setAppInitializedAC>
 
 type ActionsType =
     | SetAppErrorActionType
     | SetAppStatusActionType
-    | setAppInitializedType
+    | setAppInitializedtype

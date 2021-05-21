@@ -12,7 +12,7 @@ import {Redirect} from "react-router-dom";
 import {Button} from "../../common/Button/Button";
 
 
-export type LoginActionType = {
+type LoginActionType = {
     email: string
     password: string
     isLoggedIn: boolean

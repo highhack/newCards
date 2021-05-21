@@ -18,9 +18,13 @@ export const authAPI = {
 
 
 export const searchAPI = {
-    search(packName: string) {
-        return instance.get(`cards/pack?packName=${packName}&pageCount=10`);
-    }
+    search(packName: string, min: number, max: number) {
+        return instance.get(`cards/pack?packName=${packName}&min=${min}&max=${max}&pageCount=10`);
+    },
+    //этот запрос нужен, если фильтр делать со второй кнопкой
+    // searchMinMax (min: number, max: number) {
+    //     return instance.get(`cards/pack?min=${min}&max=${max}`)
+    // }
 }
 
 

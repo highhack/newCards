@@ -18,34 +18,3 @@ tbody:nth-child(even) {
 
 .inputTitlePack {
 }
-
-.backgroundForWindow {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background: black;
-    opacity: 0.3;
-    z-index: 20;
-}
-
-.inputWindow {
-    width: 400px;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    justify-content: center;
-    align-items: center;
-    background: rgb(100 214 124);
-    z-index: 21;
-    margin: auto;
-    top: 30vh;
-    bottom: auto;
-    right: auto;
-    left: 40vw;
-    border-radius: 5px;
-    border: black 1px solid;
-
-}

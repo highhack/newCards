@@ -1,6 +1,5 @@
 import {Dispatch} from "redux"
 import {authAPI} from "../m3-dal/auth-api";
-import {setAppInitializedAC} from "./appReducer";
 
 // types
 type InitialStateType = {
@@ -16,8 +15,6 @@ type ActionsType = ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setErrorTextLoggedInAC>
     | ReturnType<typeof changCheckboxLoggedInAC>
     | ReturnType<typeof setAppStatusAC>
-    | ReturnType<typeof setAppInitializedAC>
-
 
 export type RequestStatusType = 'idle' | 'loading...' | 'succeeded' | 'failed' | "";
 
@@ -67,10 +64,8 @@ export const loginTC = (email: string, password: string, rememberMe?: boolean) =
     try {
         await authAPI.login(email, password, rememberMe);
         dispatch(setIsLoggedInAC(true));
-        dispatch(setAppInitializedAC(true))
     } catch (error) {
-        // debugger
-        // dispatch(setErrorTextLoggedInAC(error.response.data.error))
+        dispatch(setErrorTextLoggedInAC(error.response.data.error))
     }
     dispatch(setAppStatusAC("idle"));
 };
@@ -84,7 +79,6 @@ export const logoutTC = (value: boolean) => async (dispatch: Dispatch<ActionsTyp
         dispatch(setIsLoggedInAC(false));
     } catch (error) {
         dispatch(setErrorTextLoggedInAC(error.response.data.error));
-        dispatch(setAppInitializedAC(false))
     }
     dispatch(setAppStatusAC("idle"));
 }
