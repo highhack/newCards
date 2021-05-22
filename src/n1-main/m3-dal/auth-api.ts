@@ -20,7 +20,12 @@ export const authAPI = {
 export const searchAPI = {
     search(packName: string) {
         return instance.get(`cards/pack?packName=${packName}&pageCount=10`);
-    }
+    },
+    searchPacksUserId(userId: string) {
+        debugger
+        return instance.get(`cards/pack?pageCount=10&user_id=${userId}&page=1`)
+            .then(response => response.data)
+    },
 }
 
 

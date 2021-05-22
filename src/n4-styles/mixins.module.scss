@@ -1,0 +1,31 @@
+@mixin backgroundForWindow() {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: black;
+  opacity: 0.3;
+  z-index: 20;
+}
+
+@mixin window($width, $height, $background, $border) {
+  width: $width;
+  height: $height;
+  background: $background;
+  border: $border;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  background: $background;
+  z-index: 21;
+  margin: auto;
+  top: 30vh;
+  bottom: auto;
+  right: auto;
+  left: 40vw;
+  border-radius: 5px;
+
+}

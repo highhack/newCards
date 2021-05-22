@@ -1,8 +1,14 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import s from './Packs.module.css'
-import {Button} from "../../common/Button/Button";
+import {Button} from "../../common/button/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {addPackTC, deletePackTC, getPacksTC, setPackIdAC, updatePackTitleTC} from "../../../m2-bll/packReducer";
+import {
+    addPackTC,
+    deletePackTC,
+    getPacksTC,
+    setPackIdAC,
+    updatePackTitleTC
+} from "../../../m2-bll/packReducer";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {SearchPack} from "../searchPack/SearchPack";
 import {getCardsTC} from "../../../m2-bll/cardsReducer";
@@ -10,17 +16,17 @@ import {NavLink} from "react-router-dom";
 import {CardPackType} from "../../../m3-dal/api";
 import {SearchTable} from "../searchPack/SearchTable";
 import {Paginator} from "../searchPack/Paginator";
+import Preloader from "../../common/preloader/Preloader";
+import Error from "../../common/error/Error";
 
-// type PropsType = {
-//     page: number
-//     pageCount: number
-// }
 
 const Packs = React.memo(() => {
     const cardPacks = useSelector<AppRootStateType, Array<CardPackType>>(state => state.packs.cardPacks)
     const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn);
-    let packId = useSelector<AppRootStateType, string>(state => state.packs.packId);
+    const packId = useSelector<AppRootStateType, string>(state => state.packs.packId);
+    const errorText = useSelector<AppRootStateType, string | null>(state => state.register.errorText);
+    const searchStatus = useSelector<AppRootStateType, 'allPacks' | 'myPacks' >(state => state.packs.searchStatus);
 
     let [writtenTitlePack, setWrittenTitlePack] = useState('')
     let [inputPackTitle, setInputPackTitle] = useState(false)
@@ -47,16 +53,9 @@ const Packs = React.memo(() => {
 
 
     useEffect(() => {
-        if (isInitialized)
+        if (isInitialized && searchStatus === 'allPacks')
             dispatch(getPacksTC(currentPage))
     }, [dispatch, isInitialized, currentPage])
-
-
-    // const packs = useSelector<AppRootStateType, any>(state => state.packs)
-    // let cardPacks = packs.cardPacks
-    //     if (isInitialized)
-    //         dispatch(getPacksTC())
-    // }, [dispatch, isInitialized])
 
 
     const onChangePackTitle = (e: ChangeEvent<HTMLInputElement>) => {
@@ -94,23 +93,23 @@ const Packs = React.memo(() => {
                 <NavLink to='/login'>Login</NavLink>
             </div>
         )
-    if (cardPacks === undefined) return <div>Not Found Packs</div>
+    else if (cardPacks === undefined) return <div>Not Found Packs</div>
 
-    return (
-        <div>
-            {(inputPackTitle) &&
+    else return (
             <div>
-                <div className={s.backgroundForWindow}>{}</div>
-                <div className={s.inputWindow}>
-                    <input
-                        onChange={onChangePackTitle}
-                        placeholder={'Please enter new name'}
-                        value={writtenTitlePack}
-                        className={s.inputTitlePack}/>
-                    <Button onClick={savePack} backgroundColor={'blue'} size={"large"} label={'Save'}/>
-                </div>
-            </div>}
-            {(inputChangeTitle) &&
+                {(inputPackTitle) &&
+                <div>
+                    <div className={s.backgroundForWindow}>{}</div>
+                    <div className={s.inputWindow}>
+                        <input
+                            onChange={onChangePackTitle}
+                            placeholder={'Please enter new name'}
+                            value={writtenTitlePack}
+                            className={s.inputTitlePack}/>
+                        <Button onClick={savePack} backgroundColor={'blue'} size={"large"} label={'Save'}/>
+                    </div>
+                </div>}
+                {(inputChangeTitle) &&
                 <div>
                     <div className={s.backgroundForWindow}>{}</div>
                     <div className={s.inputWindow}>
@@ -125,50 +124,48 @@ const Packs = React.memo(() => {
                             size={"large"}/>
                     </div>
                 </div>}
-            <SearchPack/>
-            <div>
+                <SearchPack/>
                 <SearchTable/>
-            </div>
-            <table className={s.table}>
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Cards count</th>
-                    <th>Created</th>
-                    <th>Lest update</th>
-                    <th><Button onClick={addPackTitle} label={'Add Pack'}/></th>
-                </tr>
-                </thead>
-                {cardPacks.map((p: any) => {
-                    return <tbody  className={s.packData}>
+                <table className={s.table}>
+                    <thead>
                     <tr>
-                        <td>{p.name}</td>
-                        <td>{p.cardsCount}</td>
-                        <td>{p.created}</td>
-                        <td>{p.updated}</td>
-                        <td>
-                            <Button
-                                onClick={() => changeTitle(p._id)}
-                                label={'Update'}/>
-                        </td>
-                        <td>
-                            <Button
-                                onClick={() => deletePack(p._id)}
-                                label={'Delete'}/>
-                        </td>
-                        <td>
-                            <NavLink to='/cards' onClick={() => showCards(p._id)}>Cards</NavLink>
-                        </td>
+                        <th>Name</th>
+                        <th>Cards count</th>
+                        <th>Created</th>
+                        <th>Lest update</th>
+                        <th><Button onClick={addPackTitle} label={'Add Pack'}/></th>
                     </tr>
-                    </tbody>
-                })
-                }
-            </table>
-            <Paginator/>
-        </div>
-    );
+                    </thead>
+                    {cardPacks.map((p: any) => {
+                        return <tbody className={s.packData}>
+                        <tr>
+                            <td>{p.name}</td>
+                            <td>{p.cardsCount}</td>
+                            <td>{p.created}</td>
+                            <td>{p.updated}</td>
+                            <td>
+                                <Button
+                                    onClick={() => changeTitle(p._id)}
+                                    label={'Update'}/>
+                            </td>
+                            <td>
+                                <Button
+                                    onClick={() => deletePack(p._id)}
+                                    label={'Delete'}/>
+                            </td>
+                            <td>
+                                <NavLink to='/cards' onClick={() => showCards(p._id)}>Cards</NavLink>
+                            </td>
+                        </tr>
+                        </tbody>
+                    })}
+                </table>
+                <Paginator/>
+                <Preloader/>
+                <Error errorText={errorText} />
+            </div>
+        );
 })
 
 
-// @ts-ignore
 export default Packs;

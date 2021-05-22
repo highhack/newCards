@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from "react";
 import s from './Cards.module.css'
-import {Button} from "../../common/Button/Button";
+import {Button} from "../../common/button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {SearchPack} from "../searchPack/SearchPack";

@@ -12,7 +12,7 @@ export const  Api = {
     },
     getPacks(page: number) {
         return instance.get<GetCardPackResponseType>(`cards/pack?pageCount=10&page=${page}`)
-            .then(response =>   response.data)
+            .then(response => response.data)
     },
     postNewPack(title: string) {
         return instance.post<PostOrDeleteResponseType>(`cards/pack`, {cardsPack: {name: title}})
@@ -56,8 +56,8 @@ export const  Api = {
 
 type GetCardPackResponseType = {
     // pageCount: number
-    // page: number
-    [key: string] : Array<CardPackType>
+    cardPacks : Array<CardPackType>
+    page: number
 }
 
 export  type CardPackType = {

@@ -40,7 +40,7 @@ export const setLoadingStatusAC = (loadingStatus: LoadingStatusType) => ({type: 
 
 // thunks
 
-export const SendRegisterTC = (mail: string, password: string) => (dispatch: Dispatch<ActionsType>) => {
+export const SendRegisterTC = (mail: string, password: string) => (dispatch: ThunkDispatch) => {
     dispatch(setLoadingStatusAC("loading"))
     Api.postDataRegister(mail, password)
         .then((res) => {
@@ -49,7 +49,8 @@ export const SendRegisterTC = (mail: string, password: string) => (dispatch: Dis
             }
             dispatch(setLoadingStatusAC('succeeded'))
         })
-        .catch(error => {dispatch(setErrorTextAC(error.response.data.error))
+        .catch(error => {
+            dispatch(setErrorTextAC(error.response.data.error))
             dispatch(setLoadingStatusAC('failed'))
             })
 }
@@ -64,4 +65,4 @@ type ActionsType =
     | setAddedUserACType
     | setLoadingStatusACType
 
-// type ThunkDispatch = Dispatch<ActionsType>
+type ThunkDispatch = Dispatch<ActionsType>

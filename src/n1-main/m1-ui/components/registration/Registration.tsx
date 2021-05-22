@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useState} from "react";
 import s from './Registration.module.css'
-import {Button} from "../../common/Button/Button";
+import {Button} from "../../common/button/Button";
 import {Redirect} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
@@ -9,6 +9,8 @@ import {
     SendRegisterTC,
     setErrorTextAC,
 } from "../../../m2-bll/registerReducer";
+import Preloader from "../../common/preloader/Preloader";
+import Error from "../../common/error/Error";
 
 
 type RegistrationType = {
@@ -67,18 +69,14 @@ const Registration = () => {
             <div>
                 <p> Please fill in the blank fields and press sign up </p>
                 <form className={s.register}>
-                    {loadingStatus === 'loading' ? <div>Loading...</div>: ''}
+                    {loadingStatus === 'loading' ? <Preloader/> : ''}
                     <div>Email</div>
                     <input onChange={onChangeMail}/>
                     <div >Password</div>
                     <input onChange={onChangePassword}/>
                     <div >Password</div>
                     <input onChange={onChangeCheckPassword}/>
-                    <div className={s.errorText} >{errorText !== null
-                        ? <div className={s.errorText}>{errorText}</div>
-                        : ''}
-                    </div>
-
+                    <Error errorText={errorText} />
                     <Button
                         disabled={loadingStatus === 'loading'}
                         onBlur={hideErrorText}

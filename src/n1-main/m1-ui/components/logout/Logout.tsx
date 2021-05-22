@@ -1,9 +1,10 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
-import {logoutTC, RequestStatusType} from "../../../m2-bll/loginReducer";
+import {logoutTC} from "../../../m2-bll/loginReducer";
 import {Redirect} from "react-router-dom";
-import {Button} from "../../common/Button/Button";
+import {Button} from "../../common/button/Button";
+import Preloader from "../../common/preloader/Preloader";
 
 
 
@@ -12,8 +13,6 @@ type LoginActionType = {
     password: string
     isLoggedIn: boolean
     rememberMe: boolean
-    errorText: null | string
-    loadingStatus: RequestStatusType
 }
 
 export const Logout = React.memo(() => {
@@ -36,6 +35,7 @@ export const Logout = React.memo(() => {
                 backgroundColor={'blue'}
                 onClick={setLogout}
             />
+            <Preloader/>
         </div>
     }
 )

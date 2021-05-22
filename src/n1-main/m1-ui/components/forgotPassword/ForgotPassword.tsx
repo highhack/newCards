@@ -1,5 +1,5 @@
 import React, { useCallback, useState} from 'react';
-import {Button} from '../../common/Button/Button';
+import {Button} from '../../common/button/Button';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../m2-bll/store';
 import {forgotPasswordTC, RequestStatusType} from '../../../m2-bll/forgotReducer';

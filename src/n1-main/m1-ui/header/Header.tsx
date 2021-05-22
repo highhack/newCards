@@ -30,9 +30,6 @@ const Header = () => {
             <div className={s.item}>
                 <NavLink to='/Profile' activeClassName={s.active}>Profile</NavLink>
             </div>
-            <div className={s.item}>
-                <NavLink to='/packs' activeClassName={s.active}>Packs</NavLink>
-            </div>
         </nav>
         </Switch>
     )
