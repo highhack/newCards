@@ -12,7 +12,7 @@ const Profile = () => {
 
     const showMyPacks = () => {
         dispatch(setSearchStatusAC('myPacks'))
-        dispatch(searchMyPacksTC(myId))
+        // dispatch(searchMyPacksTC(1, myId))
     }
     return (
         <div>

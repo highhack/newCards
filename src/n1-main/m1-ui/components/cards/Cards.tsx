@@ -7,6 +7,8 @@ import {SearchPack} from "../searchPack/SearchPack";
 import {CardType} from "../../../m3-dal/api";
 import {addCardTC, deleteCardsTC, setCardIdAC, updateCardTitleTC} from "../../../m2-bll/cardsReducer";
 import { Paginator } from "../searchPack/Paginator";
+import Preloader from "../../common/preloader/Preloader";
+import Error from "../../common/error/Error";
 
 
 
@@ -55,11 +57,17 @@ const Cards = React.memo(() => {
     const updateTitle = () => {
         dispatch(updateCardTitleTC(question,answer, cardId, packId))
         setInputChangeTitle(false)
+        setQuestion('')
+        setAnswer('')
     }
 
 
         return (
             <div>
+                <div>
+                    <Preloader/>
+                    {/*<Error errorText={errorText}/>*/}
+                </div>
                 {(cardTitle)
                     ? <div>
                         <div className={s.backgroundForWindow}>{}</div>

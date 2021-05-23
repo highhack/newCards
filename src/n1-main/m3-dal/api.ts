@@ -58,6 +58,7 @@ type GetCardPackResponseType = {
     // pageCount: number
     cardPacks : Array<CardPackType>
     page: number
+    cardsPackTotalCount: number
 }
 
 export  type CardPackType = {

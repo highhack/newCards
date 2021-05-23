@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import cn from "classnames";
 import {useDispatch, useSelector} from "react-redux";
-import { AppRootStateType } from "../../../m2-bll/store";
+import {AppRootStateType} from "../../../m2-bll/store";
 import s from "./searchPack.module.css"
-import { getPacksTC } from "../../../m2-bll/packReducer";
+import {getPacksTC, searchMyPacksTC} from "../../../m2-bll/packReducer";
 
 // type PaginatorType = {
 //     page: number
@@ -16,29 +16,32 @@ import { getPacksTC } from "../../../m2-bll/packReducer";
 // }
 
 
-
 export let Paginator = () => {
-
     const portionSize = useSelector<AppRootStateType, number>(state => state.packs.portionSize);
     // const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount);
     const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packs.cardPacksTotalCount);
     const currentPage = useSelector<AppRootStateType, number>(state => state.packs.page);
+    const searchStatus = useSelector<AppRootStateType, 'allPacks' | 'myPacks'>(state => state.packs.searchStatus);
+    const myId = useSelector<AppRootStateType, string>(state => state.app.myId);
 
     const dispatch = useDispatch()
 
 
-    let pagesCount = Math.ceil(cardPacksTotalCount / portionSize);
+    let pagesCount = Math.ceil(cardPacksTotalCount / 10);
     let pages = [];
 
-   const onPageChanged =  (currentPage: number) => {
-        dispatch(getPacksTC(currentPage))
+    const onPageChanged = (currentPage: number) => {
+        debugger
+        (searchStatus === 'allPacks')
+            ? dispatch(getPacksTC(currentPage))
+            : dispatch(searchMyPacksTC(currentPage, myId))
     }
 
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
 
-    let portionCount = Math.ceil(pagesCount / 10);
+    let portionCount = Math.ceil(pagesCount / portionSize);
     let [portionNumber, setPortionNumber] = useState<number>(1);
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize;

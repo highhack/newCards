@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     addPackTC,
     deletePackTC,
-    getPacksTC,
+    getPacksTC, searchMyPacksTC,
     setPackIdAC,
     updatePackTitleTC
 } from "../../../m2-bll/packReducer";
@@ -27,6 +27,7 @@ const Packs = React.memo(() => {
     const packId = useSelector<AppRootStateType, string>(state => state.packs.packId);
     const errorText = useSelector<AppRootStateType, string | null>(state => state.register.errorText);
     const searchStatus = useSelector<AppRootStateType, 'allPacks' | 'myPacks' >(state => state.packs.searchStatus);
+    const myId = useSelector<AppRootStateType, string>(state => state.app.myId);
 
     let [writtenTitlePack, setWrittenTitlePack] = useState('')
     let [inputPackTitle, setInputPackTitle] = useState(false)
@@ -55,7 +56,10 @@ const Packs = React.memo(() => {
     useEffect(() => {
         if (isInitialized && searchStatus === 'allPacks')
             dispatch(getPacksTC(currentPage))
-    }, [dispatch, isInitialized, currentPage])
+        else if (isInitialized && searchStatus === 'myPacks')
+            dispatch(searchMyPacksTC(1, myId))
+
+    }, [dispatch, isInitialized, currentPage, searchStatus])
 
 
     const onChangePackTitle = (e: ChangeEvent<HTMLInputElement>) => {

@@ -21,9 +21,9 @@ export const searchAPI = {
     search(packName: string) {
         return instance.get(`cards/pack?packName=${packName}&pageCount=10`);
     },
-    searchPacksUserId(userId: string) {
+    searchPacksUserId(userId: string, page: number) {
         debugger
-        return instance.get(`cards/pack?pageCount=10&user_id=${userId}&page=1`)
+        return instance.get(`cards/pack?pageCount=10&user_id=${userId}&page=${page}`)
             .then(response => response.data)
     },
 }

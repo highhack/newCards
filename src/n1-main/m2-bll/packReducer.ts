@@ -55,11 +55,9 @@ export const setPackIdAC = (packId: string) => ({type: 'SET-PACK-ID', packId} as
 export const setSearchStatusAC = (searchStatus: string) => ({type: 'SET-SEARCH-STATUS', searchStatus} as const)
 
 //actions Paginator
-export const setCurrentPage = (page: number) => ({type: "SET_CURRENT_PAGE", page} as const)
-export const setCardPacksTotalCount = (cardPacksTotalCount: number) => ({
-    type: "SET_TOTAL_COUNT",
-    cardPacksTotalCount: cardPacksTotalCount
-} as const)
+export const setCurrentPageAC = (page: number) => ({type: "SET_CURRENT_PAGE", page} as const)
+export const setCardPacksTotalCountAC = (cardPacksTotalCount: number) => ({
+    type: "SET_TOTAL_COUNT", cardPacksTotalCount} as const)
 
 
 // thunks
@@ -68,8 +66,9 @@ export const getPacksTC = (page: number) => (dispatch: ThunkDispatch) => {
     Api.getPacks(page)
         .then((data) => {
             dispatch(setPacksAC(data.cardPacks))
-            dispatch(setCurrentPage(data.page))
+            dispatch(setCurrentPageAC(data.page))
             dispatch(setLoadingStatusAC('succeeded'))
+            // dispatch(setCardPacksTotalCountAC(data.cardsPackTotalCount))
         })
 
 }
@@ -123,7 +122,7 @@ export const updatePackTitleTC = (newPackName: string, packId: string, page: num
 }
 
 
-export const searchAllPacksTC = (packName: string) => async (dispatch: Dispatch) => {
+export const searchPacksTC = (packName: string) => async (dispatch: Dispatch) => {
     dispatch(setLoadingStatusAC("loading"))
     try {
         let a: any = await searchAPI.search(packName);
@@ -134,13 +133,17 @@ export const searchAllPacksTC = (packName: string) => async (dispatch: Dispatch)
         dispatch(setLoadingStatusAC("failed"))
     }
 }
-export const searchMyPacksTC = (myId: string) => async (dispatch: Dispatch) => {
+export const searchMyPacksTC = (page: number, myId: string) => async (dispatch: Dispatch) => {
+    debugger
+    dispatch(setSearchStatusAC('myPacks'))
     dispatch(setLoadingStatusAC("loading"))
     try {
         debugger
-        let a: any = await searchAPI.searchPacksUserId(myId);
+        let a: any = await searchAPI.searchPacksUserId(myId, page);
         dispatch(setPacksAC(a.cardPacks));
         dispatch(setLoadingStatusAC("succeeded"))
+        // dispatch(setSearchStatusAC("myPacks"))
+        dispatch(setCardPacksTotalCountAC(a.cardPacksTotalCount))
     } catch (error) {
         debugger
         // dispatch(setErrorTextAC(error.response.data.error));
@@ -153,8 +156,8 @@ export type setPacksACType = ReturnType<typeof setPacksAC>;
 export type addPackACType = ReturnType<typeof addPackAC>;
 export type deletePackACType = ReturnType<typeof deletePackAC>;
 export type SetPackIdACType = ReturnType<typeof setPackIdAC>;
-export type setCurrentPageType = ReturnType<typeof setCurrentPage>;
-export type setCardPacksTotalCountType = ReturnType<typeof setCardPacksTotalCount>;
+export type setCurrentPageType = ReturnType<typeof setCurrentPageAC>;
+export type setCardPacksTotalCountType = ReturnType<typeof setCardPacksTotalCountAC>;
 export type setSearchStatusACType = ReturnType<typeof setSearchStatusAC>;
 
 type ActionsType =

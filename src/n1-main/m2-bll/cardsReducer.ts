@@ -1,5 +1,6 @@
 import {Dispatch} from 'redux'
 import {Api, CardType} from "../m3-dal/api";
+import {setLoadingStatusAC, setLoadingStatusACType} from "./registerReducer";
 
 
 type InitialStateType = {
@@ -11,7 +12,7 @@ type InitialStateType = {
 const initialState: InitialStateType = {
     cards: [],
     packId: '',
-    cardId:''
+    cardId: ''
 }
 
 export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType) => {
@@ -19,12 +20,7 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
         case 'SET-CARDS':
             return {...state, cards: action.cards, packId: action.packId}
         case 'SET-CARD-ID':
-            let a =  {...state, cardId: action.cardId}
-            return a
-        // case 'ADD-CARD':
-        //     return {...state, newCardsTitle: action.newCardsTitle}
-        // case 'DELETE-CARD':
-        //     return state.cards.filter((p: any) => p._id !== action.id)
+            return {...state, cardId: action.cardId}
         default:
             return state
     }
@@ -37,48 +33,50 @@ export const setCardIdAC = (cardId: string) => ({type: 'SET-CARD-ID', cardId} as
 
 
 // thunks
-export const getCardsTC = (packId: string) => {
-    return (dispatch: ThunkDispatch) => {
-        Api.getCards(packId)
-            .then((data) => {
-               return dispatch(setCardsAC(data.cards,packId ))
-            })
-    }
+export const getCardsTC = (packId: string) => (dispatch: ThunkDispatch) => {
+    dispatch(setLoadingStatusAC('loading'))
+    Api.getCards(packId)
+        .then((data) => {
+            dispatch(setCardsAC(data.cards, packId))
+            dispatch(setLoadingStatusAC('succeeded'))
+        })
 }
-export const addCardTC = (question: string, answer: string, packId: string) => {
-    return (dispatch: ThunkDispatch) => {
-        Api.postNewCard(question, answer, packId)
-            .then((data) => {
-                Api.getCards(packId)
-                    .then((data) => {
-                        dispatch(setCardsAC(data.cards, packId))
-                    })
-            })
-    }
-}
-export const deleteCardsTC = (id: string, packId: string) => {
-    return (dispatch: ThunkDispatch) => {
-        Api.deleteCard(id)
-            .then((data) => {
-                Api.getCards(packId)
-                    .then((data: any) => {
-                        dispatch(setCardsAC(data.cards, packId))
-                    })
-            })
-    }
+export const addCardTC = (question: string, answer: string, packId: string) => (dispatch: ThunkDispatch) => {
+    dispatch(setLoadingStatusAC('loading'))
+    Api.postNewCard(question, answer, packId)
+        .then((data) => {
+            Api.getCards(packId)
+                .then((data) => {
+                    dispatch(setCardsAC(data.cards, packId))
+                    dispatch(setLoadingStatusAC('succeeded'))
+                })
+        })
 }
 
-export const updateCardTitleTC = (quesrion: string,answer: string, cardId: string, packId: string) => {
-    return (dispatch: ThunkDispatch) => {
-        Api.updateCard(quesrion,answer, cardId)
+export const deleteCardsTC = (id: string, packId: string) => (dispatch: ThunkDispatch) => {
+    dispatch(setLoadingStatusAC('loading'))
+    Api.deleteCard(id)
+        .then((data) => {
+            Api.getCards(packId)
+                .then((data: any) => {
+                    dispatch(setCardsAC(data.cards, packId))
+                    dispatch(setLoadingStatusAC('succeeded'))
+                })
+        })
+}
+
+export const updateCardTitleTC = (quesrion: string, answer: string, cardId: string, packId: string) =>
+    (dispatch: ThunkDispatch) => {
+        dispatch(setLoadingStatusAC('loading'))
+        Api.updateCard(quesrion, answer, cardId)
             .then((data) => {
                 Api.getCards(packId)
                     .then((data: any) => {
                         dispatch(setCardsAC(data.cards, packId))
+                        dispatch(setLoadingStatusAC('succeeded'))
                     })
             })
     }
-}
 
 
 // types
@@ -88,6 +86,6 @@ export type setCardIdACType = ReturnType<typeof setCardIdAC>;
 type ActionsType =
     | setCardsACType
     | setCardIdACType
-    // | deleteCardACType
+    | setLoadingStatusACType
 
 type ThunkDispatch = Dispatch<ActionsType>

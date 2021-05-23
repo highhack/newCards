@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from "react";
 import {useDispatch} from "react-redux";
 import {Button} from "../../common/button/Button";
 import s from './searchPack.module.css'
-import {searchAllPacksTC} from "../../../m2-bll/packReducer";
+import {searchPacksTC} from "../../../m2-bll/packReducer";
 
 // type SearchPackType = {
 //     cardPacks: any
@@ -18,7 +18,7 @@ export let SearchPack = () => {
     const [filter, setFilter] = useState('')
 
     let setSearch = () => {
-        dispatch(searchAllPacksTC(filter));
+        dispatch(searchPacksTC(filter));
     }
 
     let onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
