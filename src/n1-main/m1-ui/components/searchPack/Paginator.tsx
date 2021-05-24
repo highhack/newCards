@@ -31,7 +31,6 @@ export let Paginator = () => {
     let pages = [];
 
     const onPageChanged = (currentPage: number) => {
-        debugger
         (searchStatus === 'allPacks')
             ? dispatch(getPacksTC(currentPage))
             : dispatch(searchMyPacksTC(currentPage, myId))

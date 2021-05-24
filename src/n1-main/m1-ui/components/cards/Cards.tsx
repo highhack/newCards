@@ -8,7 +8,6 @@ import {CardType} from "../../../m3-dal/api";
 import {addCardTC, deleteCardsTC, setCardIdAC, updateCardTitleTC} from "../../../m2-bll/cardsReducer";
 import { Paginator } from "../searchPack/Paginator";
 import Preloader from "../../common/preloader/Preloader";
-import Error from "../../common/error/Error";
 
 
 

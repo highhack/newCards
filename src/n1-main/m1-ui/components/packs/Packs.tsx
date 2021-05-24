@@ -59,7 +59,7 @@ const Packs = React.memo(() => {
         else if (isInitialized && searchStatus === 'myPacks')
             dispatch(searchMyPacksTC(1, myId))
 
-    }, [dispatch, isInitialized, currentPage, searchStatus])
+    }, [dispatch, isInitialized, currentPage, searchStatus, myId])
 
 
     const onChangePackTitle = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,6 +1,7 @@
 import {Dispatch} from 'redux'
 import {Api, CardType} from "../m3-dal/api";
 import {setLoadingStatusAC, setLoadingStatusACType} from "./registerReducer";
+import {setCardPacksTotalCountAC, setCardPacksTotalCountType} from "./packReducer";
 
 
 type InitialStateType = {
@@ -37,6 +38,7 @@ export const getCardsTC = (packId: string) => (dispatch: ThunkDispatch) => {
     dispatch(setLoadingStatusAC('loading'))
     Api.getCards(packId)
         .then((data) => {
+            dispatch(setCardPacksTotalCountAC(data.cardsTotalCount))
             dispatch(setCardsAC(data.cards, packId))
             dispatch(setLoadingStatusAC('succeeded'))
         })
@@ -87,5 +89,6 @@ type ActionsType =
     | setCardsACType
     | setCardIdACType
     | setLoadingStatusACType
+| setCardPacksTotalCountType
 
 type ThunkDispatch = Dispatch<ActionsType>

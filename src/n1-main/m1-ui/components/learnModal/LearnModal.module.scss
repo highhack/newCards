@@ -1,0 +1,9 @@
+@import './src/n4-styles/mixins.module';
+
+.background {
+  @include backgroundForWindow()
+}
+
+.window {
+  @include window(600px, 400px, rgb(100 214 124), black 1px solid)
+}

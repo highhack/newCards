@@ -65,10 +65,10 @@ export const getPacksTC = (page: number) => (dispatch: ThunkDispatch) => {
     dispatch(setLoadingStatusAC('loading'))
     Api.getPacks(page)
         .then((data) => {
+            dispatch(setCardPacksTotalCountAC(data.cardPacksTotalCount))
             dispatch(setPacksAC(data.cardPacks))
             dispatch(setCurrentPageAC(data.page))
             dispatch(setLoadingStatusAC('succeeded'))
-            // dispatch(setCardPacksTotalCountAC(data.cardsPackTotalCount))
         })
 
 }
@@ -134,18 +134,15 @@ export const searchPacksTC = (packName: string) => async (dispatch: Dispatch) =>
     }
 }
 export const searchMyPacksTC = (page: number, myId: string) => async (dispatch: Dispatch) => {
-    debugger
     dispatch(setSearchStatusAC('myPacks'))
     dispatch(setLoadingStatusAC("loading"))
     try {
-        debugger
         let a: any = await searchAPI.searchPacksUserId(myId, page);
         dispatch(setPacksAC(a.cardPacks));
         dispatch(setLoadingStatusAC("succeeded"))
         // dispatch(setSearchStatusAC("myPacks"))
         dispatch(setCardPacksTotalCountAC(a.cardPacksTotalCount))
     } catch (error) {
-        debugger
         // dispatch(setErrorTextAC(error.response.data.error));
         dispatch(setLoadingStatusAC("failed"))
     }

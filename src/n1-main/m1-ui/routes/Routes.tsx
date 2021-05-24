@@ -7,6 +7,7 @@ import Profile from '../components/profile/Profile';
 import {Login} from '../components/login/Login';
 import Packs from '../components/packs/Packs';
 import Cards from '../components/cards/Cards';
+import LearnModal from "../components/learnModal/LearnModal";
 
 const  Routes = () => {
 
@@ -20,6 +21,7 @@ const  Routes = () => {
                 <Route exact path={'/login'} render={() => <Login />} />
                 <Route exact path={'/packs'} render={() => <Packs />} />
                 <Route exact path={'/cards/'} render={() => <Cards/>} />
+                <Route exact path={'/learn/'} render={() => <LearnModal/>} />
                 <Route path={ '/404' } render={ () => <Error404 /> }/>
                 <Redirect path={ '*' } to={ '/404' }/>
             </Switch>

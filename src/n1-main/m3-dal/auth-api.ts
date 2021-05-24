@@ -22,7 +22,6 @@ export const searchAPI = {
         return instance.get(`cards/pack?packName=${packName}&pageCount=10`);
     },
     searchPacksUserId(userId: string, page: number) {
-        debugger
         return instance.get(`cards/pack?pageCount=10&user_id=${userId}&page=${page}`)
             .then(response => response.data)
     },
