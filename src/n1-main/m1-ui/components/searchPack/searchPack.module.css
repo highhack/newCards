@@ -1,4 +1,5 @@
 .searchPack {
+    display: flex;
     margin: 10px 0;
     flex-direction: row-reverse;
     width: 50vh;

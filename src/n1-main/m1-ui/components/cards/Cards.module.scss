@@ -16,6 +16,14 @@
     z-index: 20;
 }
 
+.searchComponents {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .inputWindow {
     width: 400px;
     height: 300px;
@@ -34,11 +42,4 @@
     border-radius: 5px;
     border: black 1px solid;
 
-    .searchComponents {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        flex-wrap: wrap;
-    }
 }
