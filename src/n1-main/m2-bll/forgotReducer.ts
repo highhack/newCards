@@ -61,14 +61,14 @@ export const forgotPasswordTC = (email: string) => {
 }
 
 
-// export const authMeTC =()=>(dispatch: ThunkDispatch)=>{
-//     cardAPI.authMe().then((res: any) => {
-//     }).catch(e => {
-//         const error = e.response?e.response.data.error:(e.message + ', more details in the console');
-//     }).finally(()=>{
-//         }
-//     )
-// }
+export const authMeTC =()=>(dispatch: ThunkDispatch)=>{
+    cardAPI.authMe().then((res: any) => {
+    }).catch(e => {
+        // const error = e.response?e.response.data.error:(e.message + ', more details in the console');
+    }).finally(()=>{
+        }
+    )
+}
 
 
 

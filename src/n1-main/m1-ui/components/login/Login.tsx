@@ -13,7 +13,7 @@ import Preloader from "../../common/preloader/Preloader";
 
 
 
-export type LoginActionType = {
+type LoginActionType = {
     email: string
     password: string
     isLoggedIn: boolean

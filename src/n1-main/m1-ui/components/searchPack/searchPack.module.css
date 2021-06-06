@@ -1,5 +1,4 @@
 .searchPack {
-    display: flex;
     margin: 10px 0;
     flex-direction: row-reverse;
     width: 50vh;
@@ -24,7 +23,7 @@
     border: 1px solid gray;
 }
 
-.pageNumber .selectedPage {
+.selectedPage {
     font-weight: bold;
-    border-color: black;
+    border: 2px solid black;
 }
