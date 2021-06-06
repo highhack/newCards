@@ -48,3 +48,10 @@ tbody:nth-child(even) {
     border: black 1px solid;
 
 }
+.searchComponents {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}

@@ -128,8 +128,10 @@ const Packs = React.memo(() => {
                             size={"large"}/>
                     </div>
                 </div>}
-                <SearchPack/>
-                <SearchTable/>
+                <div className={s.searchComponents}>
+                    <SearchPack/>
+                    <SearchTable/>
+                </div>
                 <table className={s.table}>
                     <thead>
                     <tr>

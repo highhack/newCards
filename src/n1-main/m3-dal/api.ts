@@ -2,6 +2,7 @@ import axios from "axios";
 
 
 const instance = axios.create({
+    // baseURL: "http://localhost:7542/2.0/",
     baseURL: 'https://neko-back.herokuapp.com/2.0',
     withCredentials: true,
 })
@@ -11,7 +12,7 @@ export const  Api = {
             .then(response =>   response.data)
     },
     getPacks(page: number) {
-        return instance.get<GetCardPackResponseType>(`cards/pack?pageCount=10&page=${page}`)
+        return instance.get<GetCardPackResponseType>(`cards/pack?pageCount=10&page=${page}&user_id=`)
             .then(response => response.data)
     },
     postNewPack(title: string) {

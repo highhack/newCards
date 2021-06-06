@@ -56,8 +56,6 @@ export const Login = () => {
             <Error errorText={errorText}/>
             <p> Please fill in the blank fields and press LOGIN </p>
             <p>or use common test account credentials:</p>
-            <p>Email: <b>nya-admin@nya.nya</b></p>
-            <p>Password: <b>1qazxcvBG</b></p>
             <form className={s.register}>
                 <div>
                     Email

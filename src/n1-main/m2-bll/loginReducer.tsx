@@ -57,7 +57,7 @@ export const loginTC = (email: string, password: string, rememberMe?: boolean) =
         dispatch(setAppInitializedAC(true))
         dispatch(setLoadingStatusAC('succeeded'))
     } catch (error) {
-        error.response.data.error && dispatch(setErrorTextAC("Password or mail not correct"))
+        // error.response.data.error && dispatch(setErrorTextAC("Password or mail not correct"))
         dispatch(setLoadingStatusAC('failed'))
     }
 };

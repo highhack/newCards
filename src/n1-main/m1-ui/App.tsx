@@ -4,6 +4,7 @@ import Header from "./header/Header";
 import Routes from "./routes/Routes";
 import {initializeAppTC} from "../m2-bll/appReducer";
 import {useDispatch} from "react-redux";
+import HeaderTest from "./header/HeaderTest";
 
 
 
@@ -18,6 +19,7 @@ const App = () => {
   return (
     <div className="App">
       <Header />
+      {/*<HeaderTest />*/}
       <Routes />
     </div>
   );
