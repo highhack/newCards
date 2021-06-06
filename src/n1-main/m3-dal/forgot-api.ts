@@ -6,8 +6,8 @@ const settings = {
 
 
 const instance = axios.create({
-    baseURL: "http://localhost:7542/2.0/",
-    // baseURL: 'https://neko-back.herokuapp.com/2.0/',
+    // baseURL: "http://localhost:7542/2.0/",
+    baseURL: 'https://neko-back.herokuapp.com/2.0/',
     ...settings
 })
 
@@ -17,8 +17,4 @@ export const cardAPI = {
         const from = "test-front-admin <ai73a@yandex.by>"
         return instance.post('auth/forgot', {email,from,message});
     },
-    // authMe(){
-    //     let promise = instance.post('auth/me', {});
-    //     return promise;
-    // }
 }

@@ -43,9 +43,12 @@ const Registration = () => {
         const SendRegister = () => {
             if (password !== checkPassword) {
                 return dispatch(setErrorTextAC('password is not correct'))
-            } else
+            } else {
                 dispatch(SendRegisterTC(mail, password))
-        }
+                setMail('')
+                setPassword('')
+                setCheckPassword('')
+        }}
 
     const onChangeMail = (e: ChangeEvent<HTMLInputElement>) => {
         setMail(e.currentTarget.value)

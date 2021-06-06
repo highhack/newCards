@@ -2,7 +2,8 @@ import React, { useCallback, useState} from 'react';
 import {Button} from '../../common/button/Button';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../m2-bll/store';
-import {forgotPasswordTC, RequestStatusType} from '../../../m2-bll/forgotReducer';
+import {forgotPasswordTC, RequestStatusType, setAppErrorAC} from '../../../m2-bll/forgotReducer';
+import Preloader from "../../common/preloader/Preloader";
 
 
 const ForgotPassword = React.memo(function ForgotPassword() {
@@ -12,26 +13,24 @@ const ForgotPassword = React.memo(function ForgotPassword() {
             setValue(e.currentTarget.value);
         }
     }
-    const statusApp =useSelector((store: AppRootStateType):RequestStatusType =>store.forgotPassword.status );
+    const status =useSelector((store: AppRootStateType):RequestStatusType =>store.forgotPassword.status );
     const serverError =useSelector((store: AppRootStateType):string|null =>store.forgotPassword.error);
     const dispatch = useDispatch();
     const onClick = useCallback(() => {
         dispatch(forgotPasswordTC(value))
     setValue('')}, [value, dispatch])
+    const hideErrorText = () => {dispatch(setAppErrorAC(null))}
 
-    // useEffect(() => {
-    //     dispatch(authMeTC())
-    // },[dispatch]);
 
 
     return (
-        <div style={{marginTop:"25px"}}>
+        <div style={{marginTop:"25px"}} onClick={hideErrorText}>
             Enter your email
-            {(statusApp==="loading")?<div style={{color:"blue"}}>Loading...</div>:null}
+            {(status ==="loading")?<Preloader/>:null}
             <input type="email" value={value} onChange={handleChange} style={{display:"block",    marginLeft: "auto", marginRight:'auto', marginBottom:"5px", marginTop:"5px"}}/>
-            {(statusApp==="succeeded")?<div style={{color:"green"}}> Please check your inbox</div>:null}
+            {(status ==="succeeded")?<div style={{color:"green"}}> Please check your inbox</div>:null}
             {serverError && <div style={{color:"red"}}>{serverError}</div>}
-            <Button size={'small'} label={"Forgot Password"} backgroundColor={"rgb(100 214 124)"} onClick={onClick}/>
+            <Button size={'medium'} label={"Forgot Password"} backgroundColor={'blue'} onClick={onClick} onBlur={hideErrorText} />
         </div>
     );
 })

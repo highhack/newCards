@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import s from './Packs.module.css'
+import s from './Packs.module.scss'
 import {Button} from "../../common/button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -86,6 +86,12 @@ const Packs = React.memo(() => {
         dispatch(updatePackTitleTC(ChangeTitle, packId, currentPage))
         setInputChangeTitle(false)
     }
+    const hideUpdateWindow = () => {
+        setInputChangeTitle(false)
+    }
+    const hideInputWindow = () => {
+        setInputChangeTitle(false)
+    }
 
 
     if (!isLoggedIn)
@@ -100,10 +106,10 @@ const Packs = React.memo(() => {
     else if (cardPacks === undefined) return <div>Not Found Packs</div>
 
     else return (
-            <div>
+            <div className={s.packs}>
                 {(inputPackTitle) &&
                 <div>
-                    <div className={s.backgroundForWindow}>{}</div>
+                    <div className={s.backgroundForWindow} onClick={hideInputWindow}>{}</div>
                     <div className={s.inputWindow}>
                         <input
                             onChange={onChangePackTitle}
@@ -115,8 +121,8 @@ const Packs = React.memo(() => {
                 </div>}
                 {(inputChangeTitle) &&
                 <div>
-                    <div className={s.backgroundForWindow}>{}</div>
-                    <div className={s.inputWindow}>
+                    <div className={s.backgroundForWindow} onClick={hideUpdateWindow}>{}</div>
+                    <div className={s.inputWindow} >
                         <input
                             onChange={doChangesInTitle}
                             value={ChangeTitle}
@@ -129,6 +135,7 @@ const Packs = React.memo(() => {
                     </div>
                 </div>}
                 <div className={s.searchComponents}>
+                    <Button onClick={addPackTitle} backgroundColor={'blue'} label={'Add Pack'}/>
                     <SearchPack/>
                     <SearchTable/>
                 </div>
@@ -138,8 +145,7 @@ const Packs = React.memo(() => {
                         <th>Name</th>
                         <th>Cards count</th>
                         <th>Created</th>
-                        <th>Lest update</th>
-                        <th><Button onClick={addPackTitle} label={'Add Pack'}/></th>
+                        {/*<th>Lest update</th>*/}
                     </tr>
                     </thead>
                     {cardPacks.map((p: any) => {
@@ -148,7 +154,7 @@ const Packs = React.memo(() => {
                             <td>{p.name}</td>
                             <td>{p.cardsCount}</td>
                             <td>{p.created}</td>
-                            <td>{p.updated}</td>
+                            {/*<td>{p.updated}</td>*/}
                             <td>
                                 <Button
                                     onClick={() => changeTitle(p._id)}
@@ -160,7 +166,7 @@ const Packs = React.memo(() => {
                                     label={'Delete'}/>
                             </td>
                             <td>
-                                <NavLink to='/cards' onClick={() => showCards(p._id)}>Cards</NavLink>
+                                <NavLink to='/cards' className={s.linkToCards} onClick={() => showCards(p._id)}>Cards</NavLink>
                             </td>
                         </tr>
                         </tbody>

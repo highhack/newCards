@@ -43,10 +43,10 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
         dispatch(setLoadingStatusAC('succeeded'))
     })
         .catch(error => {
-            // dispatch(setAppErrorAC(error.response.data.error))
+            dispatch(setAppErrorAC(error.response.data.error))
             dispatch(setAppInitializedAC(false))
             dispatch(setLoadingStatusAC('failed'))
-            // dispatch(setIsLoggedInAC(false))
+            dispatch(setIsLoggedInAC(false))
         })
         // .finally(() => {
         //     dispatch(setLoadingStatusAC('succeeded'))

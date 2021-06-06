@@ -1,0 +1,23 @@
+.titleWithInput {
+    align-items: center;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin: 10px;
+    border-radius: 18px;
+    padding: 8px;
+    text-align: center;
+}
+
+
+.errorText {
+    height: 20px;
+    color: red;
+    margin-bottom: 5px;
+}
+.expleningText {
+    margin-bottom: unset;
+}

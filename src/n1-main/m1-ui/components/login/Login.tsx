@@ -5,11 +5,12 @@ import {
     changCheckboxLoggedInAC,
     loginTC,
 } from "../../../m2-bll/loginReducer";
-import s from "../registration/Registration.module.css";
-import {Redirect} from "react-router-dom";
+import s from "./Login.module.css";
+import {NavLink, Redirect} from "react-router-dom";
 import {Button} from "../../common/button/Button";
 import Error from "../../common/error/Error";
 import Preloader from "../../common/preloader/Preloader";
+
 
 
 export type LoginActionType = {
@@ -54,10 +55,11 @@ export const Login = () => {
         <div>
             <Preloader />
             <Error errorText={errorText}/>
-            <p> Please fill in the blank fields and press LOGIN </p>
-            <p>or use common test account credentials:</p>
+            <p className={s.expleningText}> Please fill in the blank fields and press LOGIN </p>
+            <p className={s.expleningText}>or use common test account credentials</p>
+            <p className={s.expleningText}>if you are not registered, go to the <NavLink to='/Registration' activeClassName={s.active}>registration</NavLink> page</p>
             <form className={s.register}>
-                <div>
+                <div className={s.titleWithInput}>
                     Email
                     <input
                         type="email"
@@ -65,8 +67,8 @@ export const Login = () => {
                         value={mail}
                         onChange={onChangEmail}
                     />
-                </div>
-                <div>
+                </div >
+                <div className={s.titleWithInput}>
                     Password
                     <input
                         type="password"
@@ -75,7 +77,7 @@ export const Login = () => {
                         onChange={onChangePassword}
                     />
                 </div>
-                <div>
+                <div className={s.titleWithInput}>
                     <input
                         type={"checkbox"}
                         name="rememberMe"

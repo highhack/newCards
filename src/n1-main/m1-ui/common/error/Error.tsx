@@ -2,6 +2,7 @@ import React from 'react';
 import s from './Error.module.scss'
 import {useDispatch} from "react-redux";
 import {setErrorTextAC} from "../../../m2-bll/registerReducer";
+import sorry from  './../../../../n3-images/sorryImg.gif'
 
 
 type ErrorProps = {
@@ -18,6 +19,9 @@ const Error = (props: ErrorProps) => {
                 <div className={s.background}>{}</div>
 
                 <div className={s.window}>
+                    <div className={s.img}>
+                        <img className={s.img} src={sorry}/>
+                    </div>
                     <div className={s.errorText}>{props.errorText}</div>
                 </div>
 

@@ -1,19 +1,6 @@
+@import './src/n4-styles/mixins.module';
 
-.table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tbody:nth-child(even) {
-    background-color: #dddddd;
-}
+@include table();
 
 .inputTitlePack {
 }
@@ -47,11 +34,11 @@ tbody:nth-child(even) {
     border-radius: 5px;
     border: black 1px solid;
 
-}
-.searchComponents {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
+    .searchComponents {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 }

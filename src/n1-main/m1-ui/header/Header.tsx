@@ -22,9 +22,6 @@ const Header = () => {
             </div>
             : ''}
             <div className={s.item}>
-                <NavLink to='/Registration' activeClassName={s.active}>Registration</NavLink>
-            </div>
-            <div className={s.item}>
                 <NavLink to='/forgot-password' activeClassName={s.active}>Forgot Password</NavLink>
             </div>
             <div className={s.item}>

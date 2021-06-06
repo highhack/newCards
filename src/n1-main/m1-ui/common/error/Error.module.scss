@@ -5,5 +5,14 @@
 }
 
 .window {
-  @include window(400px, 300px, rgb(100 214 124), black 1px solid)
+  @include window(400px, 300px, rgb(100 214 124), red 2px solid);
+  border-radius: 5px;
+};
+
+.img {
+  width: 160px;
+}
+
+.sorry {
+  height: 80px;
 }

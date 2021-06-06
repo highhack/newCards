@@ -29,3 +29,26 @@
   border-radius: 5px;
 
 }
+
+@mixin table() {
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+
+  td {
+    border: 1px solid #7cb305;
+    text-align: left;
+    padding: 8px;
+    max-width: 30vw;
+  }
+
+  tbody:nth-child(even) {
+    background-color: rgb(100 214 124);
+  }
+
+  th {
+    text-align: center;
+  }
+}

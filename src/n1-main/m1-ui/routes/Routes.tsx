@@ -17,7 +17,7 @@ const  Routes = () => {
         <div className={s.body} style={{backgroundImage: `url(${backImage})`}}>
             <Switch>
                 <div className={s.routes}>
-                    <Route exact path={'/'} render={() => <div> Hello</div>} />
+                    <Route exact path={'#'} render={() => <Profile />}/>
                     <Route exact path={'/registration'} render={() => <Registration />} />
                     <Route exact path={'/forgot-password'} render={() => <ForgotPassword />} />
                     <Route exact path={'/profile'} render={() => <Profile />} />
@@ -26,7 +26,7 @@ const  Routes = () => {
                     <Route exact path={'/cards/'} render={() => <Cards/>} />
                     <Route exact path={'/learn/'} render={() => <LearnModal/>} />
                     <Route path={ '/404' } render={ () => <Error404 /> }/>
-                    <Redirect path={ '*' } to={ '/404' }/>
+                    {/*<Redirect path={ '*' } to={ '/404' }/>*/}
                 </div>
             </Switch>
         </div>

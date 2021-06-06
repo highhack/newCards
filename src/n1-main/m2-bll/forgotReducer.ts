@@ -34,7 +34,7 @@ const setAppStatusAC = (status: RequestStatusType) => ({
     status
 } as const)
 
-const setAppErrorAC = (error: string | null) => ({
+export const setAppErrorAC = (error: string | null) => ({
     type: 'CARDS/SET-APP-ERROR',
     error
 } as const)
