@@ -1,25 +1,26 @@
 {
   "files": {
-    "main.css": "/newCards/static/css/main.bfd75058.chunk.css",
-    "main.js": "/newCards/static/js/main.0b0b2f87.chunk.js",
-    "main.js.map": "/newCards/static/js/main.0b0b2f87.chunk.js.map",
-    "runtime-main.js": "/newCards/static/js/runtime-main.c89571b4.js",
-    "runtime-main.js.map": "/newCards/static/js/runtime-main.c89571b4.js.map",
+    "main.css": "/newCards/static/css/main.4bb5d65f.chunk.css",
+    "main.js": "/newCards/static/js/main.696927e4.chunk.js",
+    "main.js.map": "/newCards/static/js/main.696927e4.chunk.js.map",
+    "runtime-main.js": "/newCards/static/js/runtime-main.ea293ebf.js",
+    "runtime-main.js.map": "/newCards/static/js/runtime-main.ea293ebf.js.map",
     "static/css/2.e4d41df7.chunk.css": "/newCards/static/css/2.e4d41df7.chunk.css",
-    "static/js/2.b6f1c3fd.chunk.js": "/newCards/static/js/2.b6f1c3fd.chunk.js",
-    "static/js/2.b6f1c3fd.chunk.js.map": "/newCards/static/js/2.b6f1c3fd.chunk.js.map",
-    "static/js/3.938a734d.chunk.js": "/newCards/static/js/3.938a734d.chunk.js",
-    "static/js/3.938a734d.chunk.js.map": "/newCards/static/js/3.938a734d.chunk.js.map",
+    "static/js/2.736bfd52.chunk.js": "/newCards/static/js/2.736bfd52.chunk.js",
+    "static/js/2.736bfd52.chunk.js.map": "/newCards/static/js/2.736bfd52.chunk.js.map",
+    "static/js/3.08cbfd81.chunk.js": "/newCards/static/js/3.08cbfd81.chunk.js",
+    "static/js/3.08cbfd81.chunk.js.map": "/newCards/static/js/3.08cbfd81.chunk.js.map",
     "index.html": "/newCards/index.html",
     "static/css/2.e4d41df7.chunk.css.map": "/newCards/static/css/2.e4d41df7.chunk.css.map",
-    "static/css/main.bfd75058.chunk.css.map": "/newCards/static/css/main.bfd75058.chunk.css.map",
-    "static/js/2.b6f1c3fd.chunk.js.LICENSE.txt": "/newCards/static/js/2.b6f1c3fd.chunk.js.LICENSE.txt"
+    "static/css/main.4bb5d65f.chunk.css.map": "/newCards/static/css/main.4bb5d65f.chunk.css.map",
+    "static/js/2.736bfd52.chunk.js.LICENSE.txt": "/newCards/static/js/2.736bfd52.chunk.js.LICENSE.txt",
+    "static/media/wallper2.b1064ff6.jpg": "/newCards/static/media/wallper2.b1064ff6.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.c89571b4.js",
+    "static/js/runtime-main.ea293ebf.js",
     "static/css/2.e4d41df7.chunk.css",
-    "static/js/2.b6f1c3fd.chunk.js",
-    "static/css/main.bfd75058.chunk.css",
-    "static/js/main.0b0b2f87.chunk.js"
+    "static/js/2.736bfd52.chunk.js",
+    "static/css/main.4bb5d65f.chunk.css",
+    "static/js/main.696927e4.chunk.js"
   ]
 }
