@@ -77,7 +77,7 @@ const Registration = () => {
                     <input onChange={onChangeMail}/>
                     <div >Password</div>
                     <input onChange={onChangePassword}/>
-                    <div >Password</div>
+                    <div >Confirm password</div>
                     <input onChange={onChangeCheckPassword}/>
                     <Error errorText={errorText} />
                     <Button

@@ -16,3 +16,10 @@
 .sorry {
   height: 80px;
 }
+
+.backAndWindow {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}

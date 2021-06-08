@@ -28,19 +28,25 @@ const Packs = React.memo(() => {
     const errorText = useSelector<AppRootStateType, string | null>(state => state.register.errorText);
     const searchStatus = useSelector<AppRootStateType, 'allPacks' | 'myPacks' >(state => state.packs.searchStatus);
     const myId = useSelector<AppRootStateType, string>(state => state.app.myId);
+    const currentCardsPage = useSelector<AppRootStateType, number | null>(state => state.cards.currentCardsPage);
+    const currentPage = useSelector<AppRootStateType, number>(state => state.packs.page);
 
     let [writtenTitlePack, setWrittenTitlePack] = useState('')
     let [inputPackTitle, setInputPackTitle] = useState(false)
     let [inputChangeTitle, setInputChangeTitle] = useState(false)
     let [ChangeTitle, setChangeTitle] = useState('')
 
-    // const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount);
-    const currentPage = useSelector<AppRootStateType, number>(state => state.packs.page);
     const dispatch = useDispatch()
 
-    const addPackTitle = () => {
-        setInputPackTitle(true)
-    }
+    useEffect(() => {
+        if (isInitialized && searchStatus === 'allPacks')
+            dispatch(getPacksTC(currentPage))
+        else if (isInitialized && searchStatus === 'myPacks')
+            dispatch(searchMyPacksTC(1, myId))
+
+    }, [dispatch, isInitialized, currentPage, searchStatus, myId])
+
+    const addPackTitle = () => {setInputPackTitle(true)}
 
 
     const changeTitle = (id: string) => {
@@ -51,34 +57,23 @@ const Packs = React.memo(() => {
             dispatch(setPackIdAC(pack._id))
         }
     }
-
-
-    useEffect(() => {
-        if (isInitialized && searchStatus === 'allPacks')
-            dispatch(getPacksTC(currentPage))
-        else if (isInitialized && searchStatus === 'myPacks')
-            dispatch(searchMyPacksTC(1, myId))
-
-    }, [dispatch, isInitialized, currentPage, searchStatus, myId])
-
-
     const onChangePackTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setWrittenTitlePack(e.currentTarget.value);
     }
     const doChangesInTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setChangeTitle(e.currentTarget.value);
     }
-
     const savePack = () => {
         dispatch(addPackTC(writtenTitlePack, currentPage))
         setWrittenTitlePack('')
         setInputPackTitle(false)
     }
-
     const showCards = (packId: string) => {
-        dispatch(getCardsTC(packId))
+        dispatch(getCardsTC(packId, currentCardsPage))
     }
-
+    const startToLearn = (packId: string) => {
+        dispatch(getCardsTC(packId, currentCardsPage))
+    }
     const deletePack = (packId: string) => {
         dispatch(deletePackTC(packId, currentPage))
     }
@@ -89,22 +84,12 @@ const Packs = React.memo(() => {
     const hideUpdateWindow = () => {
         setInputChangeTitle(false)
     }
-    const hideInputWindow = () => {
-        setInputChangeTitle(false)
-    }
+    const hideInputWindow = () => {setInputChangeTitle(false)}
 
 
     if (!isLoggedIn)
-        return (
-            <div>
-                <div>
-                    You are not authorized
-                </div>
-                <NavLink to='/login'>Login</NavLink>
-            </div>
-        )
+        return <NavLink to='/login'>Login</NavLink>
     else if (cardPacks === undefined) return <div>Not Found Packs</div>
-
     else return (
             <div className={s.packs}>
                 {(inputPackTitle) &&
@@ -144,7 +129,7 @@ const Packs = React.memo(() => {
                     <tr>
                         <th>Name</th>
                         <th>Cards count</th>
-                        <th>Created</th>
+                        {/*<th>Created</th>*/}
                         {/*<th>Lest update</th>*/}
                     </tr>
                     </thead>
@@ -153,7 +138,7 @@ const Packs = React.memo(() => {
                         <tr>
                             <td>{p.name}</td>
                             <td>{p.cardsCount}</td>
-                            <td>{p.created}</td>
+                            {/*<td>{p.created}</td>*/}
                             {/*<td>{p.updated}</td>*/}
                             <td>
                                 <Button
@@ -167,6 +152,9 @@ const Packs = React.memo(() => {
                             </td>
                             <td>
                                 <NavLink to='/cards' className={s.linkToCards} onClick={() => showCards(p._id)}>Cards</NavLink>
+                            </td>
+                            <td>
+                                <NavLink to='/learn'  onClick={() => startToLearn(p._id)}>Learn</NavLink>
                             </td>
                         </tr>
                         </tbody>

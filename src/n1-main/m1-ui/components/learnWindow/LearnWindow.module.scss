@@ -7,3 +7,11 @@
 .window {
   @include window(600px, 400px, rgb(100 214 124), black 1px solid)
 }
+
+.prevNext {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+}

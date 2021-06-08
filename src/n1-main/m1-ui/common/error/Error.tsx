@@ -15,12 +15,12 @@ const Error = (props: ErrorProps) => {
     }
     if (props.errorText !== null)
         return (
-            <div onClick={hideError}>
+            <div onClick={hideError} className={s.backAndWindow}>
                 <div className={s.background}>{}</div>
 
                 <div className={s.window}>
                     <div className={s.img}>
-                        <img className={s.img} src={sorry}/>
+                        <img className={s.img} alt={''} src={sorry}/>
                     </div>
                     <div className={s.errorText}>{props.errorText}</div>
                 </div>

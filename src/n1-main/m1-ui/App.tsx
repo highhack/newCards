@@ -5,7 +5,6 @@ import Header from "./header/Header";
 import Routes from "./routes/Routes";
 import {initializeAppTC} from "../m2-bll/appReducer";
 import {useDispatch} from "react-redux";
-import HeaderTest from "./header/HeaderTest";
 
 
 
@@ -22,7 +21,6 @@ const App = () => {
     <div className="App">
       {/*// hashrouter //  provider*/}
       <Header />
-      {/*<HeaderTest />*/}
       <Routes />
     </div>
       </BrowserRouter>

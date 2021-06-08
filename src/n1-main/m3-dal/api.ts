@@ -29,8 +29,8 @@ export const  Api = {
         return promise
             .then(response => response.data)
     },
-    getCards(packId: string) {
-        let promise = instance.get<CardsDataType>(`cards/card?&cardsPack_id=${packId}&pageCount=10`);
+    getCards(packId: string, currentPage:  number | null) {
+        let promise = instance.get<CardsDataType>(`cards/card?&cardsPack_id=${packId}&pageCount=10&page=${currentPage}`);
         return promise
             .then(response => response.data)
     },
@@ -55,7 +55,7 @@ export const  Api = {
     }
 }
 
-type GetCardPackResponseType = {
+export type GetCardPackResponseType = {
     // pageCount: number
     cardPacks : Array<CardPackType>
     page: number

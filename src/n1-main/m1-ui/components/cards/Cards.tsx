@@ -5,7 +5,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../../m2-bll/store";
 import {SearchPack} from "../searchPack/SearchPack";
 import {CardType} from "../../../m3-dal/api";
-import {addCardTC, deleteCardsTC, setCardIdAC, updateCardTitleTC} from "../../../m2-bll/cardsReducer";
+import {
+    addCardTC,
+    deleteCardsTC,
+    setCardIdAC,
+    updateCardTitleTC
+} from "../../../m2-bll/cardsReducer";
 import {Paginator} from "../searchPack/Paginator";
 import Preloader from "../../common/preloader/Preloader";
 
@@ -19,8 +24,19 @@ const Cards = React.memo(() => {
 
         const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards)
         const packId = useSelector<AppRootStateType, string>(state => state.cards.packId)
-        let cardId = useSelector<AppRootStateType, string>(state => state.cards.cardId);
-        const dispatch = useDispatch()
+        const cardId = useSelector<AppRootStateType, string>(state => state.cards.cardId);
+        const currentCardsPage = useSelector<AppRootStateType, number | null>(state => state.cards.currentCardsPage);
+
+    const dispatch = useDispatch()
+
+        // useEffect(() => {
+        //     dispatch(getCardsTC(packId, currentCardsPage))
+        //     dispatch(setInCardsPageAC(true))
+        //     return () => {
+        //         dispatch(setInCardsPageAC(false))
+        //     }
+        // }, [currentCardsPage, dispatch, packId])
+
 
         const addCard = () => {
             setCardTitle(true)
@@ -43,17 +59,17 @@ const Cards = React.memo(() => {
         }
 
         const saveCard = () => {
-            dispatch(addCardTC(question, answer, packId))
+            dispatch(addCardTC(question, answer, packId, currentCardsPage))
             setCardTitle(false)
             setQuestion('')
             setAnswer('')
         }
         const deleteCard = (id: string, packId: string) => {
-            dispatch(deleteCardsTC(id, packId))
+            dispatch(deleteCardsTC(id, packId, currentCardsPage))
         }
 
         const updateTitle = () => {
-            dispatch(updateCardTitleTC(question, answer, cardId, packId))
+            dispatch(updateCardTitleTC(question, answer, cardId, packId, currentCardsPage))
             setInputChangeTitle(false)
             setQuestion('')
             setAnswer('')
@@ -112,16 +128,16 @@ const Cards = React.memo(() => {
                 {cards.length === 0
                     ? <div>Not Found Cards</div>
                     : <table className={s.table}>
-                            <thead>
-                            <tr>
-                                <th>Question</th>
-                                <th>Answer</th>
-                                <th>Grade</th>
-                                <th>Shots</th>
-                            </tr>
-                            </thead>
-                {cards.map(p =>
-                    <tbody className={s.packData}>
+                        <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Answer</th>
+                            <th>Grade</th>
+                            <th>Shots</th>
+                        </tr>
+                        </thead>
+                        {cards.map(p =>
+                            <tbody className={s.packData}>
                             <tr>
                                 <td>{p.question}</td>
                                 <td>{p.answer}</td>
@@ -138,9 +154,9 @@ const Cards = React.memo(() => {
                                 </td>
                             </tr>
                             </tbody>
-                     )}
+                        )}
 
-                        </table>}
+                    </table>}
                 <Paginator/>
             </div>
         );

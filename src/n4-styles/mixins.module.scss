@@ -21,12 +21,12 @@
   align-items: center;
   background: $background;
   z-index: 21;
-  margin: auto;
-  top: 30vh;
   bottom: auto;
   right: auto;
-  left: 40vw;
   border-radius: 5px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 
 }
 

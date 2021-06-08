@@ -91,6 +91,9 @@ export const Login = () => {
                     backgroundColor={'blue'}
                 />
             </form>
+            <div>
+                <NavLink to='/forgot-password' activeClassName={s.active}>Forgot Password</NavLink>
+            </div>
         </div>
     )
 }
