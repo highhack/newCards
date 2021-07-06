@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     addPackTC,
     deletePackTC,
-    getPacksTC, searchMyPacksTC,
+    getPacksTC, searchMyPacksTC, setLearnWindowOpenAC,
     setPackIdAC,
     updatePackTitleTC
 } from "../../../m2-bll/packReducer";
@@ -18,6 +18,7 @@ import {SearchTable} from "../searchPack/SearchTable";
 import {Paginator} from "../searchPack/Paginator";
 import Preloader from "../../common/preloader/Preloader";
 import Error from "../../common/error/Error";
+import LearnWindow from "../learnWindow/LearnWindow";
 
 
 const Packs = React.memo(() => {
@@ -30,11 +31,13 @@ const Packs = React.memo(() => {
     const myId = useSelector<AppRootStateType, string>(state => state.app.myId);
     const currentCardsPage = useSelector<AppRootStateType, number | null>(state => state.cards.currentCardsPage);
     const currentPage = useSelector<AppRootStateType, number>(state => state.packs.page);
+    const learnWindowOpen = useSelector<AppRootStateType, boolean>(state => state.packs.learnWindowOpen);
 
     let [writtenTitlePack, setWrittenTitlePack] = useState('')
     let [inputPackTitle, setInputPackTitle] = useState(false)
     let [inputChangeTitle, setInputChangeTitle] = useState(false)
     let [ChangeTitle, setChangeTitle] = useState('')
+
 
     const dispatch = useDispatch()
 
@@ -72,6 +75,7 @@ const Packs = React.memo(() => {
         dispatch(getCardsTC(packId, currentCardsPage))
     }
     const startToLearn = (packId: string) => {
+        dispatch(setLearnWindowOpenAC(true))
         dispatch(getCardsTC(packId, currentCardsPage))
     }
     const deletePack = (packId: string) => {
@@ -129,8 +133,6 @@ const Packs = React.memo(() => {
                     <tr>
                         <th>Name</th>
                         <th>Cards count</th>
-                        {/*<th>Created</th>*/}
-                        {/*<th>Lest update</th>*/}
                     </tr>
                     </thead>
                     {cardPacks.map((p: any) => {
@@ -138,28 +140,16 @@ const Packs = React.memo(() => {
                         <tr>
                             <td>{p.name}</td>
                             <td>{p.cardsCount}</td>
-                            {/*<td>{p.created}</td>*/}
-                            {/*<td>{p.updated}</td>*/}
-                            <td>
-                                <Button
-                                    onClick={() => changeTitle(p._id)}
-                                    label={'Update'}/>
-                            </td>
-                            <td>
-                                <Button
-                                    onClick={() => deletePack(p._id)}
-                                    label={'Delete'}/>
-                            </td>
-                            <td>
-                                <NavLink to='/cards' className={s.linkToCards} onClick={() => showCards(p._id)}>Cards</NavLink>
-                            </td>
-                            <td>
-                                <NavLink to='/learn'  onClick={() => startToLearn(p._id)}>Learn</NavLink>
-                            </td>
+                            <td><Button label={'Learn'}  onClick={() => startToLearn(p._id)}/></td>
+                            <td><Button onClick={() => changeTitle(p._id)} label={'Update'}/></td>
+                            <td><Button onClick={() => deletePack(p._id)} label={'Delete'}/></td>
+                            <td><NavLink to='/cards' className={s.linkToCards}
+                                         onClick={() => showCards(p._id)}>Cards</NavLink></td>
                         </tr>
                         </tbody>
                     })}
                 </table>
+                {learnWindowOpen && <LearnWindow />}
                 <Paginator/>
                 <Preloader/>
                 <Error errorText={errorText} />

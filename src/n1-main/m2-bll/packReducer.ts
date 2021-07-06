@@ -13,6 +13,7 @@ type InitialStateType = {
     page?: number
     portionSize: number
     searchStatus: 'allPacks' | 'myPacks'
+    learnWindowOpen: boolean
 }
 const initialState: InitialStateType = {
     cardPacks: [],
@@ -23,7 +24,8 @@ const initialState: InitialStateType = {
     pageCount: 10,
     page: 1,
     portionSize: 5,
-    searchStatus: 'allPacks'
+    searchStatus: 'allPacks',
+    learnWindowOpen: false
 }
 
 export const packReducer = (state: InitialStateType = initialState, action: ActionsType) => {
@@ -42,6 +44,8 @@ export const packReducer = (state: InitialStateType = initialState, action: Acti
             return {...state, cardPacksTotalCount: action.cardPacksTotalCount}
         case "SET-SEARCH-STATUS":
             return {...state, searchStatus: action.searchStatus}
+            case "SET-LEARN-WINDOW-OPEN":
+            return {...state, learnWindowOpen: action.learnWindowOpen}
         default:
             return state
     }
@@ -53,6 +57,7 @@ export const addPackAC = (newPackTitle: string) => ({type: 'ADD-PACK', newPackTi
 export const deletePackAC = (id: string) => ({type: 'DELETE-PACK', id} as const)
 export const setPackIdAC = (packId: string) => ({type: 'SET-PACK-ID', packId} as const)
 export const setSearchStatusAC = (searchStatus: string) => ({type: 'SET-SEARCH-STATUS', searchStatus} as const)
+export const setLearnWindowOpenAC = (learnWindowOpen: boolean) => ({type: "SET-LEARN-WINDOW-OPEN", learnWindowOpen} as const)
 
 //actions Paginator
 export const setCurrentPageAC = (page: number) => ({type: "SET_CURRENT_PAGE", page} as const)
@@ -156,6 +161,7 @@ export type SetPackIdACType = ReturnType<typeof setPackIdAC>;
 export type setCurrentPageType = ReturnType<typeof setCurrentPageAC>;
 export type setCardPacksTotalCountType = ReturnType<typeof setCardPacksTotalCountAC>;
 export type setSearchStatusACType = ReturnType<typeof setSearchStatusAC>;
+export type setLearnWindowOpenACType = ReturnType<typeof setLearnWindowOpenAC>;
 
 type ActionsType =
     | setPacksACType
@@ -167,5 +173,6 @@ type ActionsType =
     | setLoadingStatusACType
     | setErrorTextACType
     | setSearchStatusACType
+    | setLearnWindowOpenACType
 
 type ThunkDispatch = Dispatch<ActionsType>

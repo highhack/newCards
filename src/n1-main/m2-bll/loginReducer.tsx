@@ -1,6 +1,6 @@
 import {Dispatch} from "redux"
 import {authAPI} from "../m3-dal/auth-api";
-import {setAppInitializedAC} from "./appReducer";
+import {initializeAppTC, setAppInitializedAC, setAppInitializedType} from "./appReducer";
 import {setErrorTextAC, setErrorTextACType, setLoadingStatusAC, setLoadingStatusACType} from "./registerReducer";
 
 // types
@@ -16,6 +16,7 @@ type ActionsType = ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setAppInitializedAC>
     | setLoadingStatusACType
     | setErrorTextACType
+    | setAppInitializedType
 
 
 
@@ -56,8 +57,9 @@ export const loginTC = (email: string, password: string, rememberMe?: boolean) =
         dispatch(setIsLoggedInAC(true));
         dispatch(setAppInitializedAC(true))
         dispatch(setLoadingStatusAC('succeeded'))
-    } catch (error) {
-        // error.response.data.error && dispatch(setErrorTextAC("Password or mail not correct"))
+    }
+    catch (error) {
+        await// error.response.data.error && dispatch(setErrorTextAC("Password or mail not correct"))
         dispatch(setLoadingStatusAC('failed'))
     }
 };

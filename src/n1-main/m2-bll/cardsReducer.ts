@@ -40,7 +40,7 @@ export const setCardsAC = (cards: Array<any>, packId: string) => ({type: 'SET-CA
 export const deleteCardAC = (id: string) => ({type: 'DELETE-CARD', id} as const)
 export const setCardIdAC = (cardId: string) => ({type: 'SET-CARD-ID', cardId} as const)
 export const setInCardsPageAC = (inCardsPage: boolean) => ({type: 'SET-IN-CARDS-PAGE', inCardsPage} as const)
-export const SerCurrentCardsPageAC = (currentCardsPage: number) => ({
+export const setCurrentCardsPageAC = (currentCardsPage: number) => ({
     type: 'SET-CURRENT-CARDS-PAGE',
     currentCardsPage
 } as const)
@@ -100,7 +100,7 @@ export type setCardsACType = ReturnType<typeof setCardsAC>;
 export type deleteCardACType = ReturnType<typeof deleteCardAC>;
 export type setCardIdACType = ReturnType<typeof setCardIdAC>;
 export type setInCardsPageACType = ReturnType<typeof setInCardsPageAC>;
-export type SerCurrentCardsPageACType = ReturnType<typeof SerCurrentCardsPageAC>;
+export type SerCurrentCardsPageACType = ReturnType<typeof setCurrentCardsPageAC>;
 type ActionsType =
     | setCardsACType
     | setCardIdACType

@@ -6,7 +6,8 @@ import s from './LearnWindow.module.scss'
 import Preloader from "../../common/preloader/Preloader";
 import {LoadingStatusType} from "../../../m2-bll/registerReducer";
 import {Button} from "../../common/button/Button";
-import {getCardsTC, SerCurrentCardsPageAC} from "../../../m2-bll/cardsReducer";
+import {getCardsTC, setCurrentCardsPageAC} from "../../../m2-bll/cardsReducer";
+import {setLearnWindowOpenAC} from "../../../m2-bll/packReducer";
 
 
 const LearnWindow = () => {
@@ -15,7 +16,8 @@ const LearnWindow = () => {
     const loadingStatus = useSelector<AppRootStateType, LoadingStatusType>(state => state.register.loadingStatus);
     const currentCardsPage = useSelector<AppRootStateType, number>(state => state.cards.currentCardsPage);
     const packId = useSelector<AppRootStateType, string>(state => state.cards.packId)
-    console.log(cards)
+    const learnWindowOpen = useSelector<AppRootStateType, boolean>(state => state.packs.learnWindowOpen);
+    console.log('cards: ' + cards)
     console.log(loadingStatus)
     console.log(currentCardsPage)
 
@@ -30,21 +32,27 @@ const LearnWindow = () => {
 
     const [cardNumber, setCardNumber] = useState(0)
     const [answerShowed, setAnswerShowed] = useState(false)
+    const [prevDisabled, setPrevDisabled] = useState(true)
+
+
     const nextCard = () => {
         setAnswerShowed(false)
+        setPrevDisabled(false)
         if (cardNumber < cards.length - 1) setCardNumber(cardNumber + 1)
         else {
-            dispatch(getCardsTC(packId, currentCardsPage + 1 ))
+            dispatch(getCardsTC(packId, currentCardsPage + 1))
             setCardNumber(0)
-            dispatch(SerCurrentCardsPageAC(currentCardsPage + 1))
+            dispatch(setCurrentCardsPageAC(currentCardsPage + 1))
         }
     }
     const prevCard = () => {
         setAnswerShowed(false)
-        if (cardNumber >= 0) setCardNumber(cardNumber - 1)
+        if (cardNumber > 0) {
+            setCardNumber(cardNumber - 1)
+        } else if (cardNumber === 0) setPrevDisabled(true)
         else {
             dispatch(getCardsTC(packId, currentCardsPage - 1))
-            dispatch(SerCurrentCardsPageAC(currentCardsPage - 1))
+            dispatch(setCurrentCardsPageAC(currentCardsPage - 1))
             setCardNumber(cards.length)
 
         }
@@ -52,13 +60,17 @@ const LearnWindow = () => {
     const showAnswer = () => {
         setAnswerShowed(true)
     }
+
+    const hideWindow = () => {
+        dispatch(setLearnWindowOpenAC(false))
+    }
     return (
         <div>
             <div>
                 <Preloader/>
                 {/*<Error errorText={errorText}/>*/}
             </div>
-            <div className={s.background}>{}</div>
+            <div className={s.background} onClick={hideWindow}>{}</div>
             {loadingStatus === 'succeeded'
                 ? <div className={s.window}>
                     {!answerShowed
@@ -74,8 +86,8 @@ const LearnWindow = () => {
                         <span>5</span>
                     </div>
                     <div className={s.prevNext}>
-                        <span onClick={prevCard}>prev</span>
-                        <span onClick={nextCard}>next</span>
+                        <Button onClick={prevCard} label={'prev'} disabled={prevDisabled}/>
+                        <Button onClick={nextCard} label={'next'}/>
                     </div>
                 </div>
                 : <div>{}</div>}

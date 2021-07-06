@@ -10,6 +10,7 @@ import {NavLink, Redirect} from "react-router-dom";
 import {Button} from "../../common/button/Button";
 import Error from "../../common/error/Error";
 import Preloader from "../../common/preloader/Preloader";
+import {initializeAppTC} from "../../../m2-bll/appReducer";
 
 
 
@@ -33,7 +34,6 @@ export const Login = () => {
     const [mail, setMail] = useState("GABA@gmail.com")
 
     const setLogin = () => {
-
         dispatch(loginTC(mail, pass, rememberMe));
     };
 
